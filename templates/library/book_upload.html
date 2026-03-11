@@ -1,0 +1,254 @@
+{% extends "base.html" %}
+
+{% block title %}Upload Book — Islamic Digital Library{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-16">
+    <!-- Header -->
+    <div class="text-center mb-10">
+        <div class="w-16 h-16 mx-auto mb-5 bg-gradient-to-br from-emerald-100 to-teal-100 rounded-2xl flex items-center justify-center">
+            <svg class="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+            </svg>
+        </div>
+        <h1 class="font-display font-bold text-3xl text-gray-900 mb-2">Upload a Book</h1>
+        <p class="text-gray-500">Share Islamic knowledge — religious or scientific — with the Ummah. Your upload will be reviewed before publishing.</p>
+    </div>
+
+    <!-- Duplicate Warning -->
+    {% if show_duplicate_warning %}
+    <div class="mb-8 p-5 bg-amber-50 border border-amber-200 rounded-2xl">
+        <div class="flex items-start gap-3">
+            <svg class="w-6 h-6 text-amber-500 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+            </svg>
+            <div>
+                <h3 class="font-semibold text-amber-800 mb-1">Possible Duplicate Detected!</h3>
+                <p class="text-sm text-amber-700 mb-3">A similar book already exists in our library:</p>
+                <ul class="text-sm text-amber-700 space-y-1 mb-4">
+                    {% for dup in duplicates %}
+                    <li class="flex items-center gap-2">
+                        <span>•</span>
+                        <a href="{{ dup.get_absolute_url }}" target="_blank" class="underline hover:no-underline">{{ dup.title }}</a>
+                        by {{ dup.scholar.name }}
+                        <span class="text-amber-500">({{ dup.get_status_display }})</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <p class="text-sm text-amber-700 font-medium">If you still want to upload, click "Upload Anyway" below.</p>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Upload Form -->
+    <form method="POST" enctype="multipart/form-data" class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden" id="upload-form">
+        {% csrf_token %}
+
+        {% if show_duplicate_warning %}
+        <input type="hidden" name="confirm_duplicate" value="1">
+        {% endif %}
+
+        <!-- Form errors -->
+        {% if form.non_field_errors %}
+        <div class="p-5 bg-red-50 border-b border-red-100">
+            {% for error in form.non_field_errors %}
+            <p class="text-sm text-red-600 flex items-center gap-2">
+                <svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+                {{ error }}
+            </p>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="p-6 lg:p-8 space-y-6">
+
+            <!-- ★ Knowledge Domain ★ -->
+            <div class="p-4 bg-emerald-50/50 border border-emerald-100 rounded-xl">
+                <label for="id_knowledge_domain" class="block text-sm font-semibold text-gray-700 mb-2">
+                    Knowledge Domain <span class="text-red-400">*</span>
+                </label>
+                {{ form.knowledge_domain }}
+                {% if form.knowledge_domain.errors %}
+                <p class="mt-1.5 text-sm text-red-500">{{ form.knowledge_domain.errors.0 }}</p>
+                {% endif %}
+                <p class="mt-1.5 text-xs text-gray-400">Select the domain first — categories will update automatically.</p>
+            </div>
+
+            <!-- Title -->
+            <div>
+                <label for="{{ form.title.id_for_label }}" class="block text-sm font-semibold text-gray-700 mb-2">
+                    Book Title <span class="text-red-400">*</span>
+                </label>
+                {{ form.title }}
+                {% if form.title.errors %}
+                <p class="mt-1.5 text-sm text-red-500">{{ form.title.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Scholar Selection -->
+            <div>
+                <label for="{{ form.scholar.id_for_label }}" class="block text-sm font-semibold text-gray-700 mb-2">
+                    Scholar / Author <span class="text-red-400">*</span>
+                </label>
+                {{ form.scholar }}
+                {% if form.scholar.errors %}
+                <p class="mt-1.5 text-sm text-red-500">{{ form.scholar.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <!-- New Scholar Name -->
+            <div>
+                <label for="{{ form.new_scholar_name.id_for_label }}" class="block text-sm font-semibold text-gray-700 mb-2">
+                    New Scholar Name <span class="text-gray-400 font-normal">(if not listed above)</span>
+                </label>
+                {{ form.new_scholar_name }}
+                <p class="mt-1 text-xs text-gray-400">{{ form.new_scholar_name.help_text }}</p>
+            </div>
+
+            <!-- Category & Language Row -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div>
+                    <label for="{{ form.category.id_for_label }}" class="block text-sm font-semibold text-gray-700 mb-2">
+                        Category <span class="text-red-400">*</span>
+                    </label>
+                    {{ form.category }}
+                    {% if form.category.errors %}
+                    <p class="mt-1.5 text-sm text-red-500">{{ form.category.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                <div>
+                    <label for="{{ form.language.id_for_label }}" class="block text-sm font-semibold text-gray-700 mb-2">
+                        Language <span class="text-red-400">*</span>
+                    </label>
+                    {{ form.language }}
+                    {% if form.language.errors %}
+                    <p class="mt-1.5 text-sm text-red-500">{{ form.language.errors.0 }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Description -->
+            <div>
+                <label for="{{ form.description.id_for_label }}" class="block text-sm font-semibold text-gray-700 mb-2">
+                    Description
+                </label>
+                {{ form.description }}
+                {% if form.description.errors %}
+                <p class="mt-1.5 text-sm text-red-500">{{ form.description.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <!-- PDF Upload -->
+            <div>
+                <label for="{{ form.pdf_file.id_for_label }}" class="block text-sm font-semibold text-gray-700 mb-2">
+                    PDF File <span class="text-red-400">*</span>
+                </label>
+                {{ form.pdf_file }}
+                <p class="mt-1.5 text-xs text-gray-400">Only PDF files are accepted. Maximum file size: 50MB.</p>
+                {% if form.pdf_file.errors %}
+                <p class="mt-1.5 text-sm text-red-500">{{ form.pdf_file.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Cover Image Upload -->
+            <div>
+                <label for="{{ form.cover_image.id_for_label }}" class="block text-sm font-semibold text-gray-700 mb-2">
+                    Cover Image <span class="text-gray-400 font-normal">(optional)</span>
+                </label>
+                {{ form.cover_image }}
+                <p class="mt-1.5 text-xs text-gray-400">Upload a cover image for better visibility.</p>
+                {% if form.cover_image.errors %}
+                <p class="mt-1.5 text-sm text-red-500">{{ form.cover_image.errors.0 }}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="p-6 lg:p-8 bg-gray-50 border-t border-gray-100 flex items-center justify-between gap-4">
+            <a href="{% url 'library:home' %}" class="px-5 py-3 text-gray-600 font-medium rounded-xl hover:bg-gray-100 transition-colors">
+                Cancel
+            </a>
+            <button type="submit"
+                    class="px-8 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-semibold rounded-xl shadow-lg shadow-emerald-500/25 hover:shadow-xl hover:from-emerald-600 hover:to-teal-700 transition-all flex items-center gap-2"
+                    id="submit-btn">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                </svg>
+                {% if show_duplicate_warning %}Upload Anyway{% else %}Upload Book{% endif %}
+            </button>
+        </div>
+    </form>
+
+    <!-- Duplicate check indicator -->
+    <div id="duplicate-check" class="hidden mt-4 p-4 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-700">
+        ⚠️ A book with this title and scholar already exists in our library.
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    // ===== DYNAMIC CATEGORY FILTERING BY DOMAIN =====
+    const domainSelect = document.getElementById('id_knowledge_domain');
+    const categorySelect = document.getElementById('id_category');
+
+    if (domainSelect && categorySelect) {
+        domainSelect.addEventListener('change', function() {
+            const domainId = this.value;
+
+            // Clear current categories
+            categorySelect.innerHTML = '<option value="">-- Select a category --</option>';
+
+            if (!domainId) return;
+
+            // Fetch categories for selected domain
+            fetch(`/api/categories-by-domain/?domain_id=${domainId}`)
+                .then(r => r.json())
+                .then(data => {
+                    data.categories.forEach(cat => {
+                        const option = document.createElement('option');
+                        option.value = cat.id;
+                        option.textContent = cat.name;
+                        categorySelect.appendChild(option);
+                    });
+                })
+                .catch(() => {});
+        });
+    }
+
+    // ===== REAL-TIME DUPLICATE CHECK =====
+    const titleInput = document.getElementById('id_title');
+    const scholarSelect = document.getElementById('id_scholar');
+    const duplicateCheck = document.getElementById('duplicate-check');
+
+    let debounceTimer;
+
+    function checkDuplicate() {
+        const title = titleInput?.value?.trim();
+        const scholar = scholarSelect?.value;
+
+        if (title && scholar) {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                fetch(`/api/check-duplicate/?title=${encodeURIComponent(title)}&scholar=${scholar}`)
+                    .then(r => r.json())
+                    .then(data => {
+                        if (data.duplicate) {
+                            duplicateCheck.classList.remove('hidden');
+                        } else {
+                            duplicateCheck.classList.add('hidden');
+                        }
+                    })
+                    .catch(() => {});
+            }, 500);
+        } else {
+            duplicateCheck.classList.add('hidden');
+        }
+    }
+
+    titleInput?.addEventListener('input', checkDuplicate);
+    scholarSelect?.addEventListener('change', checkDuplicate);
+</script>
+{% endblock %}

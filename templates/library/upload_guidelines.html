@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+
+{% block title %}Upload Guidelines — Islamic Digital Library{% endblock %}
+{% block meta_description %}Guidelines for uploading books to the Islamic Digital Library. Learn about allowed formats, file sizes, copyright rules, and quality standards.{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-16">
+    <!-- Header -->
+    <div class="text-center mb-12">
+        <div class="w-16 h-16 mx-auto mb-5 bg-gradient-to-br from-emerald-100 to-teal-100 rounded-2xl flex items-center justify-center">
+            <svg class="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+            </svg>
+        </div>
+        <h1 class="font-display font-bold text-3xl lg:text-4xl text-gray-900 mb-3">Upload Guidelines</h1>
+        <p class="text-gray-500 text-lg max-w-2xl mx-auto">Please review these guidelines before uploading books to ensure quality and compliance.</p>
+    </div>
+
+    <div class="space-y-8">
+        <!-- Allowed Formats -->
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 lg:p-8">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center">
+                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                </div>
+                <h2 class="font-display font-bold text-xl text-gray-900">Allowed Formats</h2>
+            </div>
+            <ul class="space-y-3 text-gray-600">
+                <li class="flex items-start gap-3">
+                    <svg class="w-5 h-5 text-emerald-500 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                    <span><strong>PDF files only</strong> — We currently accept PDF format for book uploads.</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <svg class="w-5 h-5 text-emerald-500 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                    <span>Cover images should be in <strong>JPG, PNG, or WebP</strong> format.</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <svg class="w-5 h-5 text-red-400 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg>
+                    <span>Word documents, EPUB, DJVU, and scanned images are <strong>not accepted</strong>.</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- File Size Limits -->
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 lg:p-8">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center">
+                    <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"></path>
+                    </svg>
+                </div>
+                <h2 class="font-display font-bold text-xl text-gray-900">Maximum File Size</h2>
+            </div>
+            <div class="bg-amber-50 rounded-xl p-4 border border-amber-100">
+                <p class="text-amber-800 font-semibold text-lg mb-1">50 MB per PDF file</p>
+                <p class="text-amber-600 text-sm">Files exceeding this limit will be rejected. Please compress your PDF if necessary.</p>
+            </div>
+        </div>
+
+        <!-- Copyright Rules -->
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 lg:p-8">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 bg-red-100 rounded-xl flex items-center justify-center">
+                    <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                    </svg>
+                </div>
+                <h2 class="font-display font-bold text-xl text-gray-900">Copyright Rules</h2>
+            </div>
+            <ul class="space-y-3 text-gray-600">
+                <li class="flex items-start gap-3">
+                    <svg class="w-5 h-5 text-emerald-500 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                    <span>Only upload books that are <strong>free to distribute</strong> or in the public domain.</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <svg class="w-5 h-5 text-emerald-500 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                    <span>Classical Islamic texts (Hadith collections, Tafsir, Fiqh manuals) are generally public domain.</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <svg class="w-5 h-5 text-red-400 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg>
+                    <span><strong>Do not upload</strong> copyrighted books without permission from the publisher or author.</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <svg class="w-5 h-5 text-red-400 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg>
+                    <span>Violations may result in content removal and account suspension.</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Quality Standards -->
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 lg:p-8">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center">
+                    <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                    </svg>
+                </div>
+                <h2 class="font-display font-bold text-xl text-gray-900">Quality Standards</h2>
+            </div>
+            <ul class="space-y-3 text-gray-600">
+                <li class="flex items-start gap-3">
+                    <svg class="w-5 h-5 text-emerald-500 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                    <span>PDF should be <strong>text-searchable</strong> (not scanned images) when possible.</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <svg class="w-5 h-5 text-emerald-500 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                    <span>Provide an <strong>accurate title, scholar/author name, and category</strong>.</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <svg class="w-5 h-5 text-emerald-500 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                    <span>Include a <strong>book description</strong> to help users find and understand the content.</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <svg class="w-5 h-5 text-emerald-500 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                    <span>Adding a <strong>cover image</strong> greatly improves discoverability.</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <svg class="w-5 h-5 text-emerald-500 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                    <span>Avoid uploading <strong>duplicate books</strong>. The system checks for existing copies.</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Approval Process -->
+        <div class="bg-emerald-50 rounded-2xl border border-emerald-100 p-6 lg:p-8">
+            <h2 class="font-display font-bold text-xl text-emerald-800 mb-4">📋 What Happens After Upload?</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="flex items-start gap-3">
+                    <span class="w-8 h-8 bg-emerald-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shrink-0">1</span>
+                    <div>
+                        <p class="font-semibold text-emerald-800 text-sm">Upload</p>
+                        <p class="text-emerald-600 text-xs mt-0.5">Submit your book with complete details.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-3">
+                    <span class="w-8 h-8 bg-emerald-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shrink-0">2</span>
+                    <div>
+                        <p class="font-semibold text-emerald-800 text-sm">Admin Review</p>
+                        <p class="text-emerald-600 text-xs mt-0.5">Our team reviews for quality & compliance.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-3">
+                    <span class="w-8 h-8 bg-emerald-600 text-white rounded-lg flex items-center justify-center text-sm font-bold shrink-0">3</span>
+                    <div>
+                        <p class="font-semibold text-emerald-800 text-sm">Published</p>
+                        <p class="text-emerald-600 text-xs mt-0.5">Approved books become publicly available.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="text-center mt-10">
+        {% if user.is_authenticated %}
+        <a href="{% url 'library:book_upload' %}" class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-semibold rounded-2xl shadow-lg shadow-emerald-500/25 hover:shadow-xl hover:from-emerald-600 hover:to-teal-700 transition-all">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+            Upload a Book Now
+        </a>
+        {% else %}
+        <a href="{% url 'accounts:signup' %}" class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-semibold rounded-2xl shadow-lg shadow-emerald-500/25 hover:shadow-xl hover:from-emerald-600 hover:to-teal-700 transition-all">
+            Sign Up to Contribute
+        </a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

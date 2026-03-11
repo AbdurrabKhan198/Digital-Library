@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+
+{% block title %}Browse Books — Islamic Digital Library{% endblock %}
+{% block meta_description %}Browse and discover authentic Islamic books across categories like Qur'an, Hadith, Fiqh, Astronomy, Medicine, and more.{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<div class="bg-gradient-to-br from-emerald-800 to-teal-900 islamic-pattern py-12 lg:py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 class="font-display font-bold text-3xl lg:text-4xl text-white mb-3">Browse Books</h1>
+        <p class="text-emerald-100/70 text-lg">Discover authentic Islamic knowledge — religious and scientific</p>
+
+        <!-- Search -->
+        <form action="{% url 'library:search' %}" method="GET" class="mt-6 max-w-xl">
+            <div class="flex items-center bg-white/10 backdrop-blur-sm rounded-xl overflow-hidden border border-white/20 focus-within:border-white/40 transition-all">
+                <input type="text" name="q" value="{{ current_query }}"
+                       placeholder="Search books..."
+                       class="w-full px-5 py-3 bg-transparent text-white placeholder-emerald-200/50 focus:outline-none">
+                <button type="submit" class="px-5 py-3 text-emerald-200 hover:text-white transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+    <div class="flex flex-col lg:flex-row gap-8">
+        <!-- ===== FILTERS SIDEBAR ===== -->
+        <aside class="lg:w-72 shrink-0">
+            <div class="lg:sticky lg:top-24">
+                <form method="GET" action="{% url 'library:book_list' %}" id="filter-form">
+                    <!-- Keep search query if any -->
+                    {% if current_query %}
+                    <input type="hidden" name="q" value="{{ current_query }}">
+                    {% endif %}
+
+                    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+                        <div class="p-5 border-b border-gray-100">
+                            <h3 class="font-display font-semibold text-gray-900 flex items-center gap-2">
+                                <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
+                                </svg>
+                                Filters
+                            </h3>
+                        </div>
+
+                        <!-- Knowledge Domain Filter -->
+                        <div class="p-5 border-b border-gray-100">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Knowledge Domain</label>
+                            <select name="domain" onchange="this.form.submit()"
+                                    class="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 bg-white transition-all">
+                                <option value="">All Domains</option>
+                                {% for dom in knowledge_domains %}
+                                <option value="{{ dom.slug }}" {% if current_domain == dom.slug %}selected{% endif %}>{{ dom.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <!-- Category Filter -->
+                        <div class="p-5 border-b border-gray-100">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Category</label>
+                            <select name="category" onchange="this.form.submit()"
+                                    class="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 bg-white transition-all">
+                                <option value="">All Categories</option>
+                                {% for cat in categories %}
+                                <option value="{{ cat.slug }}" {% if current_category == cat.slug %}selected{% endif %}>
+                                    {{ cat.name }}{% if cat.knowledge_domain %} ({{ cat.knowledge_domain.name|truncatewords:2 }}){% endif %}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <!-- Scholar Filter -->
+                        <div class="p-5 border-b border-gray-100">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Scholar</label>
+                            <select name="scholar" onchange="this.form.submit()"
+                                    class="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 bg-white transition-all">
+                                <option value="">All Scholars</option>
+                                {% for s in scholars %}
+                                <option value="{{ s.slug }}" {% if current_scholar == s.slug %}selected{% endif %}>{{ s.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <!-- Language Filter -->
+                        <div class="p-5 border-b border-gray-100">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Language</label>
+                            <select name="language" onchange="this.form.submit()"
+                                    class="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 bg-white transition-all">
+                                <option value="">All Languages</option>
+                                {% for lang in languages %}
+                                <option value="{{ lang.id }}" {% if current_language == lang.id|stringformat:"d" %}selected{% endif %}>{{ lang.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <!-- Sort -->
+                        <div class="p-5 border-b border-gray-100">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Sort By</label>
+                            <select name="sort" onchange="this.form.submit()"
+                                    class="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 bg-white transition-all">
+                                <option value="-created_at" {% if current_sort == '-created_at' %}selected{% endif %}>Newest First</option>
+                                <option value="created_at" {% if current_sort == 'created_at' %}selected{% endif %}>Oldest First</option>
+                                <option value="-downloads" {% if current_sort == '-downloads' %}selected{% endif %}>Most Downloads</option>
+                                <option value="-views" {% if current_sort == '-views' %}selected{% endif %}>Most Views</option>
+                                <option value="title" {% if current_sort == 'title' %}selected{% endif %}>Title (A-Z)</option>
+                                <option value="-title" {% if current_sort == '-title' %}selected{% endif %}>Title (Z-A)</option>
+                            </select>
+                        </div>
+
+                        <!-- Clear Filters -->
+                        <div class="p-5">
+                            <a href="{% url 'library:book_list' %}"
+                               class="block text-center px-4 py-2.5 rounded-xl border border-gray-200 text-sm font-medium text-gray-600 hover:bg-gray-50 transition-all">
+                                Clear All Filters
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </aside>
+
+        <!-- ===== BOOK GRID ===== -->
+        <div class="flex-1 min-w-0">
+            <!-- Results count -->
+            <div class="flex items-center justify-between mb-6">
+                <p class="text-sm text-gray-500">
+                    Showing <span class="font-semibold text-gray-700">{{ page_obj.paginator.count }}</span> book{{ page_obj.paginator.count|pluralize }}
+                    {% if current_domain %}
+                    <span class="ml-1 inline-flex items-center gap-1 px-2 py-0.5 bg-emerald-50 text-emerald-700 text-xs rounded-full font-medium">
+                        {{ current_domain }}
+                        <a href="{% url 'library:book_list' %}" class="hover:text-emerald-900">×</a>
+                    </span>
+                    {% endif %}
+                </p>
+            </div>
+
+            {% if books %}
+            <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+                {% for book in books %}
+                {% include "library/includes/book_card.html" with book=book %}
+                {% endfor %}
+            </div>
+
+            {% include "library/includes/pagination.html" %}
+            {% else %}
+            <!-- Empty State -->
+            <div class="text-center py-20">
+                <div class="w-20 h-20 mx-auto mb-6 bg-gray-100 rounded-2xl flex items-center justify-center">
+                    <svg class="w-10 h-10 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                    </svg>
+                </div>
+                <h3 class="font-display font-semibold text-xl text-gray-700 mb-2">No books found</h3>
+                <p class="text-gray-400 mb-6">Try adjusting your filters or search terms.</p>
+                <a href="{% url 'library:book_list' %}" class="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-600 text-white font-medium rounded-xl hover:bg-emerald-700 transition-colors">
+                    Clear Filters
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

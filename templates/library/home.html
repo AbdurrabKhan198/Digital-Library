@@ -1,0 +1,285 @@
+{% extends "base.html" %}
+
+{% block title %}Islamic Digital Library — Your Gateway to Islamic Knowledge{% endblock %}
+
+{% block content %}
+<!-- ===== HERO SECTION ===== -->
+<section class="relative overflow-hidden bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-900 islamic-pattern">
+    <div class="absolute inset-0 bg-gradient-to-t from-emerald-900/60 to-transparent"></div>
+
+    <!-- Decorative elements -->
+    <div class="absolute top-20 left-10 w-72 h-72 bg-emerald-500/10 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-10 right-10 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
+        <div class="text-center max-w-3xl mx-auto">
+            <!-- Bismillah -->
+            <p class="font-arabic text-gold-300 text-2xl mb-6 opacity-80 animate-fade-in-up" style="color: #fcd34d;">
+                بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+            </p>
+
+            <h1 class="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl text-white mb-6 leading-tight animate-fade-in-up stagger-1">
+                Islamic Digital
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 to-teal-200">
+                    Library
+                </span>
+            </h1>
+
+            <p class="text-lg sm:text-xl text-emerald-100/80 mb-10 leading-relaxed animate-fade-in-up stagger-2">
+                Access authentic Islamic knowledge — from the Holy Qur'an and Hadith
+                to Astronomy, Medicine, and the Muslim scientific heritage. Free for the entire Ummah.
+            </p>
+
+            <!-- Search Bar -->
+            <form action="{% url 'library:search' %}" method="GET" class="relative max-w-2xl mx-auto animate-fade-in-up stagger-3">
+                <div class="search-glow flex items-center bg-white rounded-2xl shadow-2xl shadow-emerald-900/30 overflow-hidden transition-all duration-300">
+                    <div class="pl-5 text-gray-400">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </div>
+                    <input
+                        type="text"
+                        name="q"
+                        placeholder="Search books by title, scholar, or category..."
+                        class="w-full px-4 py-4 lg:py-5 text-gray-700 placeholder-gray-400 focus:outline-none text-base"
+                        id="hero-search"
+                    >
+                    <button type="submit" class="px-6 lg:px-8 py-4 lg:py-5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-semibold hover:from-emerald-600 hover:to-teal-700 transition-all whitespace-nowrap">
+                        Search
+                    </button>
+                </div>
+            </form>
+
+            <!-- Stats -->
+            <div class="flex items-center justify-center gap-6 lg:gap-10 mt-10 animate-fade-in-up stagger-4">
+                <div class="text-center">
+                    <div class="text-2xl lg:text-3xl font-bold text-white">{{ total_books }}</div>
+                    <div class="text-sm text-emerald-200/70">Books</div>
+                </div>
+                <div class="w-px h-10 bg-emerald-500/30"></div>
+                <div class="text-center">
+                    <div class="text-2xl lg:text-3xl font-bold text-white">{{ total_scholars }}</div>
+                    <div class="text-sm text-emerald-200/70">Scholars</div>
+                </div>
+                <div class="w-px h-10 bg-emerald-500/30"></div>
+                <div class="text-center">
+                    <div class="text-2xl lg:text-3xl font-bold text-white">{{ total_categories }}</div>
+                    <div class="text-sm text-emerald-200/70">Categories</div>
+                </div>
+                <div class="w-px h-10 bg-emerald-500/30"></div>
+                <div class="text-center">
+                    <div class="text-2xl lg:text-3xl font-bold text-white">{{ total_domains }}</div>
+                    <div class="text-sm text-emerald-200/70">Domains</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wave divider -->
+    <div class="absolute bottom-0 left-0 right-0">
+        <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 80L60 73.3C120 66.7 240 53.3 360 46.7C480 40 600 40 720 46.7C840 53.3 960 66.7 1080 66.7C1200 66.7 1320 53.3 1380 46.7L1440 40V80H1380C1320 80 1200 80 1080 80C960 80 840 80 720 80C600 80 480 80 360 80C240 80 120 80 60 80H0Z" fill="#f9fafb"/>
+        </svg>
+    </div>
+</section>
+
+<!-- ===== FEATURED BOOKS ===== -->
+{% if featured_books %}
+<section class="bg-gray-50 py-16 lg:py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between mb-10">
+            <div>
+                <h2 class="font-display font-bold text-3xl lg:text-4xl text-gray-900 mb-2">
+                    ⭐ Featured Books
+                </h2>
+                <p class="text-gray-500">Hand-picked selections by our editorial team</p>
+            </div>
+            <a href="{% url 'library:book_list' %}" class="hidden sm:flex items-center gap-2 text-emerald-600 hover:text-emerald-700 font-semibold text-sm transition-colors">
+                View All
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+            {% for book in featured_books %}
+            {% include "library/includes/book_card.html" with book=book %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- ===== DOMAIN-GROUPED CATEGORIES ===== -->
+{% for domain in knowledge_domains %}
+<section class="{% if forloop.counter|divisibleby:2 %}bg-white{% else %}bg-gray-50{% endif %} py-16 lg:py-20" id="domain-{{ domain.slug }}">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Domain Header -->
+        <div class="flex items-center justify-between mb-10">
+            <div class="flex items-center gap-4">
+                {% if domain.icon %}
+                <span class="text-3xl">{{ domain.icon }}</span>
+                {% endif %}
+                <div>
+                    <h2 class="font-display font-bold text-3xl lg:text-4xl text-gray-900">
+                        {{ domain.name }}
+                    </h2>
+                    {% if domain.description %}
+                    <p class="text-gray-500 mt-1 max-w-xl">{{ domain.description|truncatewords:20 }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            <a href="{% url 'library:book_list' %}?domain={{ domain.slug }}" class="hidden sm:flex items-center gap-2 text-emerald-600 hover:text-emerald-700 font-semibold text-sm transition-colors">
+                Browse All
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </a>
+        </div>
+
+        <!-- Category Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 lg:gap-5">
+            {% for category in domain.categories.all %}
+            <a href="{{ category.get_absolute_url }}"
+               class="group relative bg-white rounded-2xl p-5 lg:p-6 border border-gray-100 hover:border-emerald-200 shadow-sm hover:shadow-xl transition-all duration-300 text-center overflow-hidden">
+                <!-- Hover gradient overlay -->
+                <div class="absolute inset-0 bg-gradient-to-br from-emerald-50 to-teal-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
+
+                <div class="relative">
+                    <!-- Category Icon -->
+                    <div class="w-12 h-12 mx-auto mb-3 rounded-xl flex items-center justify-center transition-colors duration-300
+                        {% if forloop.parentloop.first %}
+                            bg-gradient-to-br from-emerald-100 to-teal-100 group-hover:from-emerald-200 group-hover:to-teal-200
+                        {% else %}
+                            bg-gradient-to-br from-blue-100 to-indigo-100 group-hover:from-blue-200 group-hover:to-indigo-200
+                        {% endif %}">
+                        {% if forloop.parentloop.first %}
+                        <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        </svg>
+                        {% else %}
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                        </svg>
+                        {% endif %}
+                    </div>
+
+                    <h3 class="font-display font-semibold text-sm text-gray-800 group-hover:text-emerald-700 transition-colors mb-0.5">
+                        {{ category.name }}
+                    </h3>
+                    <span class="text-xs text-gray-400 group-hover:text-emerald-500 transition-colors">
+                        {{ category.approved_book_count }} book{{ category.approved_book_count|pluralize }}
+                    </span>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% empty %}
+<!-- Fallback if no domains exist -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20" id="categories">
+    <div class="text-center mb-12">
+        <h2 class="font-display font-bold text-3xl lg:text-4xl text-gray-900 mb-3">
+            Browse by Category
+        </h2>
+        <p class="text-gray-500 text-lg">Explore our collection across major Islamic disciplines</p>
+    </div>
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6">
+        {% for category in categories %}
+        <a href="{{ category.get_absolute_url }}"
+           class="group bg-white rounded-2xl p-6 lg:p-8 border border-gray-100 hover:border-emerald-200 shadow-sm hover:shadow-xl transition-all duration-300 text-center">
+            <h3 class="font-display font-semibold text-gray-800 group-hover:text-emerald-700 transition-colors mb-1">
+                {{ category.name }}
+            </h3>
+            <span class="text-sm text-gray-400">{{ category.approved_book_count }} book{{ category.approved_book_count|pluralize }}</span>
+        </a>
+        {% endfor %}
+    </div>
+</section>
+{% endfor %}
+
+<!-- ===== POPULAR BOOKS ===== -->
+{% if popular_books %}
+<section class="bg-white py-16 lg:py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between mb-10">
+            <div>
+                <h2 class="font-display font-bold text-3xl lg:text-4xl text-gray-900 mb-2">
+                    🔥 Popular Books
+                </h2>
+                <p class="text-gray-500">Most downloaded books by our community</p>
+            </div>
+            <a href="{% url 'library:book_list' %}?sort=-downloads" class="hidden sm:flex items-center gap-2 text-emerald-600 hover:text-emerald-700 font-semibold text-sm transition-colors">
+                View All
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+            {% for book in popular_books %}
+            {% include "library/includes/book_card.html" with book=book %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- ===== RECENTLY ADDED ===== -->
+{% if recent_books %}
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
+    <div class="flex items-center justify-between mb-10">
+        <div>
+            <h2 class="font-display font-bold text-3xl lg:text-4xl text-gray-900 mb-2">
+                📚 Recently Added
+            </h2>
+            <p class="text-gray-500">Latest additions to our growing collection</p>
+        </div>
+        <a href="{% url 'library:book_list' %}" class="hidden sm:flex items-center gap-2 text-emerald-600 hover:text-emerald-700 font-semibold text-sm transition-colors">
+            View All
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+        </a>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+        {% for book in recent_books %}
+        {% include "library/includes/book_card.html" with book=book %}
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+<!-- ===== CTA SECTION ===== -->
+<section class="bg-gradient-to-br from-emerald-800 via-emerald-700 to-teal-800 islamic-pattern py-16 lg:py-20">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="font-display font-bold text-3xl lg:text-4xl text-white mb-4">
+            Share Knowledge, Earn Rewards
+        </h2>
+        <p class="text-emerald-100/80 text-lg mb-8 max-w-2xl mx-auto">
+            The Prophet ﷺ said: <em>"When a person dies, their deeds come to an end except for three:
+            ongoing charity (sadaqah jariyah), knowledge that is benefited from, and a righteous child who prays for them."</em>
+        </p>
+        {% if user.is_authenticated %}
+        <a href="{% url 'library:book_upload' %}" class="inline-flex items-center gap-2 px-8 py-4 bg-white text-emerald-700 font-semibold rounded-2xl shadow-xl hover:shadow-2xl hover:bg-emerald-50 transition-all">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+            </svg>
+            Upload a Book
+        </a>
+        {% else %}
+        <a href="{% url 'accounts:signup' %}" class="inline-flex items-center gap-2 px-8 py-4 bg-white text-emerald-700 font-semibold rounded-2xl shadow-xl hover:shadow-2xl hover:bg-emerald-50 transition-all">
+            Sign Up to Contribute
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+            </svg>
+        </a>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
