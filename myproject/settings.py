@@ -38,6 +38,10 @@ INSTALLED_APPS = [
     # Local apps
     "library.apps.LibraryConfig",
     "accounts.apps.AccountsConfig",
+    "blog.apps.BlogConfig",
+    # Third-party apps
+    "ckeditor",
+    "ckeditor_uploader",
 ]
 
 MIDDLEWARE = [
@@ -181,5 +185,28 @@ LOGOUT_REDIRECT_URL = "/"
 # =============================================================================
 # DEFAULT PRIMARY KEY TYPE
 # =============================================================================
+
+# =============================================================================
+# CKEDITOR CONFIGURATION
+# =============================================================================
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Custom',
+        'toolbar_Custom': [
+            ['Bold', 'Italic', 'Underline'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            ['Link', 'Unlink'],
+            ['RemoveFormat', 'Source'],
+            ['Styles', 'Format', 'Font', 'FontSize'],
+            ['TextColor', 'BGColor'],
+            ['Image', 'Table', 'HorizontalRule', 'SpecialChar'],
+        ],
+        'width': '100%',
+        'height': 400,
+    },
+}
+
+CKEDITOR_UPLOAD_PATH = "uploads/ckeditor/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

@@ -144,6 +144,7 @@
                 <div class="hidden md:flex items-center gap-1">
                     <a href="{% url 'library:home' %}" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:text-emerald-700 hover:bg-emerald-50 transition-all">Home</a>
                     <a href="{% url 'library:book_list' %}" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:text-emerald-700 hover:bg-emerald-50 transition-all">Browse</a>
+                    <a href="{% url 'blog:article_list' %}" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:text-emerald-700 hover:bg-emerald-50 transition-all">Scholars</a>
 
                     {% if user.is_authenticated %}
                         <a href="{% url 'library:book_upload' %}" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:text-emerald-700 hover:bg-emerald-50 transition-all">Upload</a>
@@ -202,6 +203,7 @@
             <div class="md:hidden hidden pb-4 border-t border-gray-100 mt-2 pt-3" id="mobile-menu">
                 <a href="{% url 'library:home' %}" class="block px-4 py-2.5 rounded-lg text-sm font-medium text-gray-600 hover:text-emerald-700 hover:bg-emerald-50 transition-all">Home</a>
                 <a href="{% url 'library:book_list' %}" class="block px-4 py-2.5 rounded-lg text-sm font-medium text-gray-600 hover:text-emerald-700 hover:bg-emerald-50 transition-all">Browse Books</a>
+                <a href="{% url 'blog:article_list' %}" class="block px-4 py-2.5 rounded-lg text-sm font-medium text-gray-600 hover:text-emerald-700 hover:bg-emerald-50 transition-all">Scholars</a>
                 {% if user.is_authenticated %}
                     <a href="{% url 'library:book_upload' %}" class="block px-4 py-2.5 rounded-lg text-sm font-medium text-gray-600 hover:text-emerald-700 hover:bg-emerald-50 transition-all">Upload Book</a>
                     <a href="{% url 'library:my_library' %}" class="block px-4 py-2.5 rounded-lg text-sm font-medium text-gray-600 hover:text-emerald-700 hover:bg-emerald-50 transition-all">My Library</a>

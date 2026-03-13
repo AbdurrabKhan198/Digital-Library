@@ -146,6 +146,44 @@ class Language(models.Model):
         return self.name
 
 
+def book_upload_path(instance, filename):
+    """Path: books/{domain}/{category}/{scholar}/{slug}.pdf"""
+    # Ensure domain is synced
+    if not instance.knowledge_domain and instance.category:
+        domain_obj = instance.category.knowledge_domain
+        domain_name = domain_obj.name if domain_obj else "unknown-domain"
+    elif instance.knowledge_domain:
+        domain_name = instance.knowledge_domain.name
+    else:
+        domain_name = "unknown-domain"
+
+    domain = slugify(domain_name)
+    category = slugify(instance.category.name) if instance.category else "unknown-category"
+    scholar = slugify(instance.scholar.name) if instance.scholar else "unknown-scholar"
+    slug = instance.slug or slugify(instance.title)
+    
+    ext = filename.split('.')[-1]
+    return f"books/{domain}/{category}/{scholar}/{slug}.{ext}"
+
+
+def cover_upload_path(instance, filename):
+    """Path: covers/{domain}/{category}/{slug}.jpg"""
+    if not instance.knowledge_domain and instance.category:
+        domain_obj = instance.category.knowledge_domain
+        domain_name = domain_obj.name if domain_obj else "unknown-domain"
+    elif instance.knowledge_domain:
+        domain_name = instance.knowledge_domain.name
+    else:
+        domain_name = "unknown-domain"
+
+    domain = slugify(domain_name)
+    category = slugify(instance.category.name) if instance.category else "unknown-category"
+    slug = instance.slug or slugify(instance.title)
+    
+    ext = filename.split('.')[-1]
+    return f"covers/{domain}/{category}/{slug}.{ext}"
+
+
 class Book(models.Model):
     """
     Main book model for the Islamic Digital Library.
@@ -194,12 +232,12 @@ class Book(models.Model):
 
     # Files
     pdf_file = models.FileField(
-        upload_to="books/pdfs/%Y/%m/",
+        upload_to=book_upload_path,
         validators=[validate_pdf_file, validate_file_size],
         help_text="Upload PDF file (max 50MB)"
     )
     cover_image = models.ImageField(
-        upload_to="books/covers/%Y/%m/",
+        upload_to=cover_upload_path,
         blank=True,
         null=True,
         help_text="Book cover image (optional)"
