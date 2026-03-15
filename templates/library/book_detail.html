@@ -29,11 +29,11 @@
                              class="w-full h-full object-cover">
                     {% else %}
                         <div class="w-full h-full flex flex-col items-center justify-center p-8 bg-gradient-to-br from-emerald-700 to-teal-800 islamic-pattern">
-                            <svg class="w-16 h-16 text-emerald-200/40 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-16 h-16 text-emerald-600/40 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
                             </svg>
                             <p class="text-white font-display font-bold text-xl text-center leading-tight">{{ book.title }}</p>
-                            <p class="text-emerald-200/60 text-sm mt-3 text-center">{{ book.scholar.name }}</p>
+                            <p class="text-emerald-600/60 text-sm mt-3 text-center">{{ book.scholar.name }}</p>
                         </div>
                     {% endif %}
                     {% if book.is_featured %}
@@ -79,7 +79,7 @@
                         {% if user.is_authenticated %}
                         <button onclick="toggleBookmark()"
                                 class="flex-1 flex items-center justify-center gap-2 px-4 py-3 border-2 font-medium rounded-xl transition-all text-sm
-                                {% if is_bookmarked %}bg-emerald-50 border-emerald-300 text-emerald-700{% else %}bg-white border-gray-200 text-gray-700 hover:border-emerald-300 hover:text-emerald-700 hover:bg-emerald-50{% endif %}"
+                                {% if is_bookmarked %}bg-emerald-50 border-emerald-600 text-emerald-700{% else %}bg-white border-gray-200 text-gray-700 hover:border-emerald-600 hover:text-emerald-700 hover:bg-emerald-50{% endif %}"
                                 id="bookmark-btn">
                             <svg class="w-4 h-4" fill="{% if is_bookmarked %}currentColor{% else %}none{% endif %}" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path>
@@ -88,7 +88,7 @@
                         </button>
                         {% else %}
                         <a href="{% url 'accounts:login' %}?next={{ request.path }}"
-                           class="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-white border-2 border-gray-200 text-gray-700 font-medium rounded-xl hover:border-emerald-300 hover:text-emerald-700 hover:bg-emerald-50 transition-all text-sm">
+                           class="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-white border-2 border-gray-200 text-gray-700 font-medium rounded-xl hover:border-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 transition-all text-sm">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path>
                             </svg>
@@ -146,7 +146,7 @@
             <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
                 {% if book.knowledge_domain %}
                 <div class="bg-emerald-50 rounded-xl p-4 border border-emerald-100">
-                    <p class="text-xs text-emerald-500 uppercase tracking-wide mb-1">Domain</p>
+                    <p class="text-xs text-emerald-700 uppercase tracking-wide mb-1">Domain</p>
                     <p class="text-sm font-semibold text-emerald-700">{{ book.knowledge_domain.name }}</p>
                 </div>
                 {% endif %}
@@ -190,7 +190,7 @@
                     About {{ book.scholar.name }}
                 </h2>
                 {% if book.scholar.field_of_expertise %}
-                <p class="inline-flex items-center gap-1.5 px-3 py-1 bg-white rounded-full text-xs font-medium text-emerald-700 border border-emerald-200 mb-3">
+                <p class="inline-flex items-center gap-1.5 px-3 py-1 bg-white rounded-full text-xs font-medium text-emerald-700 border border-emerald-500 mb-3">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
                     {{ book.scholar.field_of_expertise }}
                 </p>
@@ -217,13 +217,13 @@
                 <h2 class="font-display font-semibold text-xl text-gray-900 mb-5">Related Books</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     {% for related in related_books %}
-                    <a href="{{ related.get_absolute_url }}" class="flex items-center gap-4 bg-white rounded-xl border border-gray-100 p-4 hover:border-emerald-200 hover:shadow-md transition-all group">
+                    <a href="{{ related.get_absolute_url }}" class="flex items-center gap-4 bg-white rounded-xl border border-gray-100 p-4 hover:border-emerald-500 hover:shadow-md transition-all group">
                         <div class="w-16 h-20 shrink-0 rounded-lg overflow-hidden bg-gradient-to-br from-emerald-100 to-teal-50">
                             {% if related.cover_image %}
                                 <img src="{{ related.cover_image.url }}" alt="{{ related.title }}" class="w-full h-full object-cover">
                             {% else %}
                                 <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-emerald-600 to-teal-700">
-                                    <svg class="w-6 h-6 text-emerald-200/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                                    <svg class="w-6 h-6 text-emerald-600/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
                                 </div>
                             {% endif %}
                         </div>
@@ -258,11 +258,11 @@
             const text = document.getElementById('bookmark-text');
             const svg = btn.querySelector('svg');
             if (data.bookmarked) {
-                btn.className = btn.className.replace('bg-white border-gray-200 text-gray-700 hover:border-emerald-300 hover:text-emerald-700 hover:bg-emerald-50', 'bg-emerald-50 border-emerald-300 text-emerald-700');
+                btn.className = btn.className.replace('bg-white border-gray-200 text-gray-700 hover:border-emerald-600 hover:text-emerald-700 hover:bg-emerald-50', 'bg-emerald-50 border-emerald-600 text-emerald-700');
                 svg.setAttribute('fill', 'currentColor');
                 text.textContent = 'Saved';
             } else {
-                btn.className = btn.className.replace('bg-emerald-50 border-emerald-300 text-emerald-700', 'bg-white border-gray-200 text-gray-700 hover:border-emerald-300 hover:text-emerald-700 hover:bg-emerald-50');
+                btn.className = btn.className.replace('bg-emerald-50 border-emerald-600 text-emerald-700', 'bg-white border-gray-200 text-gray-700 hover:border-emerald-600 hover:text-emerald-700 hover:bg-emerald-50');
                 svg.setAttribute('fill', 'none');
                 text.textContent = 'Save';
             }

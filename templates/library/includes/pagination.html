@@ -3,7 +3,7 @@
 <nav class="flex items-center justify-center gap-2 mt-12" aria-label="Pagination" id="pagination">
     {% if page_obj.has_previous %}
     <a href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ page_obj.previous_page_number }}"
-       class="p-2.5 rounded-xl border border-gray-200 text-gray-500 hover:bg-emerald-50 hover:border-emerald-200 hover:text-emerald-600 transition-all">
+       class="p-2.5 rounded-xl border border-gray-200 text-gray-500 hover:bg-emerald-50 hover:border-emerald-500 hover:text-emerald-600 transition-all">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
         </svg>
@@ -17,7 +17,7 @@
             </span>
         {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
             <a href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ num }}"
-               class="w-10 h-10 flex items-center justify-center rounded-xl border border-gray-200 text-gray-600 hover:bg-emerald-50 hover:border-emerald-200 hover:text-emerald-600 font-medium text-sm transition-all">
+               class="w-10 h-10 flex items-center justify-center rounded-xl border border-gray-200 text-gray-600 hover:bg-emerald-50 hover:border-emerald-500 hover:text-emerald-600 font-medium text-sm transition-all">
                 {{ num }}
             </a>
         {% elif num == page_obj.number|add:'-3' or num == page_obj.number|add:'3' %}
@@ -27,7 +27,7 @@
 
     {% if page_obj.has_next %}
     <a href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ page_obj.next_page_number }}"
-       class="p-2.5 rounded-xl border border-gray-200 text-gray-500 hover:bg-emerald-50 hover:border-emerald-200 hover:text-emerald-600 transition-all">
+       class="p-2.5 rounded-xl border border-gray-200 text-gray-500 hover:bg-emerald-50 hover:border-emerald-500 hover:text-emerald-600 transition-all">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
         </svg>
