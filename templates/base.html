@@ -123,7 +123,7 @@
                         </button>
                         <div class="absolute top-full left-0 mt-1 hidden group-hover:block bg-white rounded-xl shadow-xl border border-gray-100 py-2 w-56 z-50">
                             <a href="{% url 'library:feedback' %}" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:text-emerald-700 hover:bg-emerald-50 transition-all">
-                                <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                                <svg class="w-4 h-4 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
                                 Help Improve Library
                             </a>
                             <a href="{% url 'library:report_issue' %}" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-600 hover:text-amber-700 hover:bg-amber-50 transition-all">
@@ -186,13 +186,13 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
         {% for message in messages %}
         <div class="p-4 rounded-xl mb-3 flex items-center gap-3 animate-fade-in-up
-            {% if message.tags == 'success' %}bg-emerald-50 text-emerald-800 border border-emerald-200
+            {% if message.tags == 'success' %}bg-emerald-50 text-emerald-800 border border-emerald-500
             {% elif message.tags == 'error' %}bg-red-50 text-red-800 border border-red-200
             {% elif message.tags == 'warning' %}bg-amber-50 text-amber-800 border border-amber-200
             {% else %}bg-blue-50 text-blue-800 border border-blue-200{% endif %}"
             id="message-{{ forloop.counter }}">
             {% if message.tags == 'success' %}
-                <svg class="w-5 h-5 text-emerald-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                <svg class="w-5 h-5 text-emerald-700 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
             {% endif %}
             <span class="text-sm font-medium">{{ message }}</span>
             <button onclick="this.parentElement.remove()" class="ml-auto text-current opacity-50 hover:opacity-100">
