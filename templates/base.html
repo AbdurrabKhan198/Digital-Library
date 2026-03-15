@@ -148,7 +148,10 @@
                             </div>
                             <span class="font-medium text-gray-700">{{ user.username }}</span>
                         </div>
-                        <a href="{% url 'accounts:logout' %}" class="px-4 py-2 rounded-xl text-sm font-medium text-gray-500 hover:text-red-600 hover:bg-red-50 transition-all">Logout</a>
+                        <form method="post" action="{% url 'accounts:logout' %}" class="inline">
+                            {% csrf_token %}
+                            <button type="submit" class="px-4 py-2 rounded-xl text-sm font-medium text-gray-500 hover:text-red-600 hover:bg-red-50 transition-all">Logout</button>
+                        </form>
                     {% else %}
                         <a href="{% url 'accounts:login' %}" class="px-4 py-2 rounded-xl text-sm font-medium text-gray-600 hover:text-emerald-700 transition-all">Login</a>
                         <a href="{% url 'accounts:signup' %}" class="px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 shadow-md hover:shadow-lg transition-all">Sign Up</a>
@@ -171,6 +174,10 @@
                 {% if user.is_authenticated %}
                     <a href="{% url 'library:book_upload' %}" class="block px-4 py-2.5 rounded-lg text-sm font-medium text-gray-600 hover:text-emerald-700 hover:bg-emerald-50 transition-all">Upload Book</a>
                     <a href="{% url 'library:my_library' %}" class="block px-4 py-2.5 rounded-lg text-sm font-medium text-gray-600 hover:text-emerald-700 hover:bg-emerald-50 transition-all">My Library</a>
+                    <form method="post" action="{% url 'accounts:logout' %}" class="block">
+                        {% csrf_token %}
+                        <button type="submit" class="w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium text-red-500 hover:bg-red-50 transition-all">Logout</button>
+                    </form>
                 {% endif %}
                 <div class="border-t border-gray-100 mt-2 pt-2 mb-1">
                     <span class="px-4 py-1 text-xs font-semibold text-gray-400 uppercase tracking-wider">Community</span>

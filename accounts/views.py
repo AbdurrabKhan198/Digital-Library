@@ -20,10 +20,19 @@ class SignupView(View):
         return render(request, "accounts/signup.html", {"form": form})
 
     def post(self, request):
+        if request.user.is_authenticated:
+            return redirect("library:home")
+            
         form = SignupForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            login(request, user)
-            messages.success(request, f"Welcome to the Islamic Digital Library, {user.username}!")
-            return redirect("library:home")
+            try:
+                user = form.save()
+                login(request, user)
+                messages.success(request, f"Welcome to Bayt al-Hikmah Online, {user.username}! Your account has been created.")
+                return redirect("library:home")
+            except Exception as e:
+                messages.error(request, "An error occurred during registration. Please try again.")
+                return render(request, "accounts/signup.html", {"form": form})
+        
+        # If form is not valid, the template will display individual field errors
         return render(request, "accounts/signup.html", {"form": form})
