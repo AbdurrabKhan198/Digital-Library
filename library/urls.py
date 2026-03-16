@@ -19,6 +19,7 @@ urlpatterns = [
     path("book/<slug:slug>/download/", views.download_book, name="book_download"),
     path("book/<slug:slug>/read/", views.ReadOnlineView.as_view(), name="book_read"),
     path("book/<slug:slug>/preview/", views.PreviewBookView.as_view(), name="book_preview"),
+    path("book/<slug:slug>/pdf-proxy/", views.pdf_proxy, name="book_pdf_proxy"),
 
     # Bookmarks
     path("book/<slug:slug>/bookmark/", views.ToggleBookmarkView.as_view(), name="toggle_bookmark"),

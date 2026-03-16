@@ -12,9 +12,10 @@ from django.views.generic import (
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q, F, Count, Sum
 from django.shortcuts import get_object_or_404, redirect
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, StreamingHttpResponse, FileResponse
 from django.contrib import messages
 from django.urls import reverse_lazy, reverse
+from django.conf import settings
 from django.contrib.auth.models import User
 
 from .models import Book, Category, Scholar, Language, KnowledgeDomain, BookBookmark
@@ -309,7 +310,7 @@ class ReadOnlineView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["preview_mode"] = False
-        context["pdf_url"] = self.object.pdf_file.url
+        context["pdf_url"] = reverse("library:book_pdf_proxy", kwargs={"slug": self.object.slug})
         return context
 
 
@@ -330,8 +331,56 @@ class PreviewBookView(DetailView):
         context = super().get_context_data(**kwargs)
         context["preview_mode"] = True
         context["max_pages"] = 5
-        context["pdf_url"] = self.object.pdf_file.url
+        context["pdf_url"] = reverse("library:book_pdf_proxy", kwargs={"slug": self.object.slug})
         return context
+
+def pdf_proxy(request, slug):
+    """
+    Proxy view to serve S3 PDFs via Django to bypass CORS limitations.
+    Fetches the file from S3 using boto3 and streams it to the browser.
+    """
+    book = get_object_or_404(Book, slug=slug, status="approved")
+    
+    if settings.USE_S3:
+        import boto3
+        from botocore.exceptions import ClientError
+        
+        # Initialize S3 client with project settings
+        s3 = boto3.client(
+            's3',
+            aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+            aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+            region_name=settings.AWS_S3_REGION_NAME
+        )
+        
+        try:
+            # The S3 Key is the pdf_file.name
+            file_key = book.pdf_file.name
+            s3_response = s3.get_object(Bucket=settings.AWS_STORAGE_BUCKET_NAME, Key=file_key)
+            
+            # Stream the Body (StreamingBody) directly to the client
+            response = StreamingHttpResponse(
+                s3_response['Body'],
+                content_type='application/pdf'
+            )
+            
+            # Add headers for inline viewing and content length
+            response['Content-Disposition'] = f'inline; filename="{slug}.pdf"'
+            if 'ContentLength' in s3_response:
+                response['Content-Length'] = s3_response['ContentLength']
+                
+            return response
+            
+        except ClientError as e:
+            return HttpResponse(f"S3 Error: {str(e)}", status=502)
+        except Exception as e:
+            return HttpResponse(f"Error: {str(e)}", status=500)
+            
+    # Local storage fallback
+    try:
+        return FileResponse(book.pdf_file.open('rb'), content_type='application/pdf')
+    except FileNotFoundError:
+        return HttpResponse("PDF file not found.", status=404)
 
 
 # =========================================================================

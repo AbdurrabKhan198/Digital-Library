@@ -15,5 +15,5 @@ def global_context(request):
     return {
         "all_categories": Category.objects.select_related("knowledge_domain").all()[:20],
         "all_domains": KnowledgeDomain.objects.prefetch_related("categories").all(),
-        "site_name": "Islamic Digital Library",
+        "site_name": "Bayt al-Hikmah Online",
     }
