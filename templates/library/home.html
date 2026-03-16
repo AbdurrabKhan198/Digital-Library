@@ -4,48 +4,51 @@
 
 {% block content %}
 <!-- ===== HERO SECTION ===== -->
-<section class="relative overflow-hidden bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-900 islamic-pattern">
-    <div class="absolute inset-0 bg-gradient-to-t from-emerald-900/60 to-transparent"></div>
+<section class="relative overflow-hidden bg-[#022c22] islamic-pattern py-20 lg:py-32">
+    <!-- Deep Gradient Overlays -->
+    <div class="absolute inset-0 bg-gradient-to-br from-emerald-950 via-emerald-900/90 to-teal-950"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(16,185,129,0.1),transparent_70%)]"></div>
 
-    <!-- Decorative elements -->
-    <div class="absolute top-20 left-10 w-72 h-72 bg-emerald-500/10 rounded-full blur-3xl"></div>
-    <div class="absolute bottom-10 right-10 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl"></div>
+    <!-- Decorative Animated Blobs -->
+    <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-emerald-500/20 rounded-full blur-[120px] animate-pulse"></div>
+    <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-teal-500/20 rounded-full blur-[120px] animate-pulse" style="animation-delay: 2s;"></div>
 
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
-        <div class="text-center max-w-3xl mx-auto">
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-4xl mx-auto">
             <!-- Bismillah -->
             <p class="font-arabic text-gold-300 text-2xl mb-6 opacity-80 animate-fade-in-up" style="color: #fcd34d;">
                 بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
             </p>
 
-            <h1 class="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl text-white mb-6 leading-tight animate-fade-in-up stagger-1">
+            <h1 class="font-display font-extrabold text-5xl sm:text-6xl lg:text-7xl text-white mb-8 leading-tight animate-fade-in-up stagger-1 tracking-tight">
                 Islamic Digital
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 to-teal-200">
+                <span class="block sm:inline text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-400 animate-gradient">
                     Library
                 </span>
             </h1>
 
-            <p class="text-lg sm:text-xl text-emerald-100 mb-10 leading-relaxed animate-fade-in-up stagger-2">
+            <p class="text-xl sm:text-2xl text-emerald-50/90 mb-12 leading-relaxed animate-fade-in-up stagger-2 max-w-3xl mx-auto font-light">
                 Access authentic Islamic knowledge — from the Holy Qur'an and Hadith
-                to Astronomy, Medicine, and the Muslim scientific heritage. Free for the entire Ummah.
+                to Astronomy, Medicine, and the Muslim scientific heritage.
+                <span class="block mt-2 font-medium text-emerald-400">Free for the entire Ummah.</span>
             </p>
 
             <!-- Search Bar -->
-            <form action="{% url 'library:search' %}" method="GET" class="relative max-w-2xl mx-auto animate-fade-in-up stagger-3">
-                <div class="search-glow flex items-center bg-white rounded-2xl shadow-2xl shadow-emerald-900/30 overflow-hidden transition-all duration-300">
-                    <div class="pl-5 text-gray-400">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            <form action="{% url 'library:search' %}" method="GET" class="relative max-w-3xl mx-auto animate-fade-in-up stagger-3 group">
+                <div class="search-glow flex items-center bg-white/95 backdrop-blur-md rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.3)] overflow-hidden transition-all duration-500 focus-within:scale-[1.02] border border-white/20">
+                    <div class="pl-6 text-emerald-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                         </svg>
                     </div>
                     <input
                         type="text"
                         name="q"
-                        placeholder="Search books by title, scholar, or category..."
-                        class="w-full px-4 py-4 lg:py-5 text-gray-700 placeholder-gray-400 focus:outline-none text-base"
+                        placeholder="Search books, scholars, or categories..."
+                        class="w-full px-5 py-5 lg:py-6 bg-transparent text-gray-900 placeholder-gray-500 focus:outline-none text-lg font-medium"
                         id="hero-search"
                     >
-                    <button type="submit" class="px-6 lg:px-8 py-4 lg:py-5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-semibold hover:from-emerald-600 hover:to-teal-700 transition-all whitespace-nowrap">
+                    <button type="submit" class="px-8 lg:px-12 py-5 lg:py-6 bg-gradient-to-r from-emerald-600 to-teal-700 text-white font-bold text-lg hover:from-emerald-500 hover:to-teal-600 transition-all whitespace-nowrap shadow-inner">
                         Search
                     </button>
                 </div>
@@ -169,7 +172,7 @@
                     <h3 class="font-display font-semibold text-sm text-gray-800 group-hover:text-emerald-700 transition-colors mb-0.5">
                         {{ category.name }}
                     </h3>
-                    <span class="text-xs text-gray-400 group-hover:text-emerald-700 transition-colors">
+                    <span class="text-xs text-gray-500 group-hover:text-emerald-700 transition-colors">
                         {{ category.approved_book_count }} book{{ category.approved_book_count|pluralize }}
                     </span>
                 </div>
@@ -194,7 +197,7 @@
             <h3 class="font-display font-semibold text-gray-800 group-hover:text-emerald-700 transition-colors mb-1">
                 {{ category.name }}
             </h3>
-            <span class="text-sm text-gray-400">{{ category.approved_book_count }} book{{ category.approved_book_count|pluralize }}</span>
+            <span class="text-sm text-gray-500">{{ category.approved_book_count }} book{{ category.approved_book_count|pluralize }}</span>
         </a>
         {% endfor %}
     </div>
@@ -256,30 +259,41 @@
 {% endif %}
 
 <!-- ===== CTA SECTION ===== -->
-<section class="bg-gradient-to-br from-emerald-800 via-emerald-700 to-teal-800 islamic-pattern py-16 lg:py-20">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 class="font-display font-bold text-3xl lg:text-4xl text-white mb-4">
-            Share Knowledge, Earn Rewards
+<section class="relative overflow-hidden bg-[#064e3b] py-24 lg:py-32">
+    <!-- Deep Pattern Overlay -->
+    <div class="absolute inset-0 islamic-pattern opacity-20"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-[#022c22] to-transparent"></div>
+    
+    <!-- Glow Effect -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(52,211,153,0.15),transparent_70%)]"></div>
+
+    <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center animate-fade-in-up">
+        <h2 class="font-display font-bold text-4xl lg:text-5xl text-white mb-6 leading-tight">
+            Share Knowledge, <span class="text-emerald-400">Earn Rewards</span>
         </h2>
-        <p class="text-emerald-100/80 text-lg mb-8 max-w-2xl mx-auto">
-            The Prophet ﷺ said: <em>"When a person dies, their deeds come to an end except for three:
-            ongoing charity (sadaqah jariyah), knowledge that is benefited from, and a righteous child who prays for them."</em>
+        <p class="text-emerald-50 text-xl mb-10 max-w-2xl mx-auto leading-relaxed opacity-90">
+            The Prophet ﷺ said: <br>
+            <span class="italic text-emerald-300">"When a person dies, their deeds come to an end except for three:
+            ongoing charity, knowledge that is benefited from, and a righteous child who prays for them."</span>
         </p>
-        {% if user.is_authenticated %}
-        <a href="{% url 'library:book_upload' %}" class="inline-flex items-center gap-2 px-8 py-4 bg-white text-emerald-700 font-semibold rounded-2xl shadow-xl hover:shadow-2xl hover:bg-emerald-50 transition-all">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
-            </svg>
-            Upload a Book
-        </a>
-        {% else %}
-        <a href="{% url 'accounts:signup' %}" class="inline-flex items-center gap-2 px-8 py-4 bg-white text-emerald-700 font-semibold rounded-2xl shadow-xl hover:shadow-2xl hover:bg-emerald-50 transition-all">
-            Sign Up to Contribute
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-            </svg>
-        </a>
-        {% endif %}
+        
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            {% if user.is_authenticated %}
+            <a href="{% url 'library:book_upload' %}" class="group relative inline-flex items-center gap-3 px-10 py-5 bg-white text-[#064e3b] font-bold rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.3)] hover:shadow-[0_25px_50px_rgba(0,0,0,0.4)] hover:-translate-y-1 transition-all duration-300">
+                <svg class="w-6 h-6 text-emerald-600 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                </svg>
+                Upload a Book
+            </a>
+            {% else %}
+            <a href="{% url 'accounts:signup' %}" class="group relative inline-flex items-center gap-3 px-10 py-5 bg-white text-[#064e3b] font-bold rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.3)] hover:shadow-[0_25px_50px_rgba(0,0,0,0.4)] hover:-translate-y-1 transition-all duration-300">
+                Join the Community
+                <svg class="w-6 h-6 text-emerald-600 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                </svg>
+            </a>
+            {% endif %}
+        </div>
     </div>
 </section>
 {% endblock %}
