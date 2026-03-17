@@ -1,0 +1,41 @@
+name: islamic-digital-library
+region: nyc
+services:
+- name: library-web
+  github:
+    branch: main
+    repo: AbdurrabKhan198/Digital-Library
+  run_command: gunicorn myproject.wsgi:application --log-file -
+  build_command: |
+    python manage.py collectstatic --noinput
+    python manage.py migrate
+  envs:
+  - key: DEBUG
+    scope: RUN_AND_BUILD_TIME
+    value: "False"
+  - key: DATABASE_URL
+    scope: RUN_TIME
+    value: ${db.DATABASE_URL}
+  - key: SECRET_KEY
+    scope: RUN_AND_BUILD_TIME
+    value: Generate_A_Unique_Key_Here
+  - key: ALLOWED_HOSTS
+    scope: RUN_TIME
+    value: "*"
+  - key: USE_S3
+    scope: RUN_TIME
+    value: "False"
+  - key: SECURE_SSL_REDIRECT
+    scope: RUN_TIME
+    value: "True"
+  instance_count: 1
+  instance_size_slug: basic-xxs
+  routes:
+  - path: /
+databases:
+- engine: PG
+  name: db
+  num_nodes: 1
+  size_slug: db-s-dev-1gb
+  storage_size_gib: 10
+  version: "16"
