@@ -1,0 +1,1449 @@
+[
+{
+    "model": "admin.logentry",
+    "pk": 8,
+    "fields": {
+        "action_time": "2026-03-15T21:39:37.378Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "blog",
+            "scholararticle"
+        ],
+        "object_id": "2",
+        "object_repr": "hjvjvh",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 7,
+    "fields": {
+        "action_time": "2026-03-15T21:22:44.791Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "blog",
+            "scholararticle"
+        ],
+        "object_id": "1",
+        "object_repr": "test",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Cover image\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 6,
+    "fields": {
+        "action_time": "2026-03-15T19:52:06.070Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "library",
+            "book"
+        ],
+        "object_id": "3",
+        "object_repr": "The Translation of the Meanings of Sahih Al-Bukhari (vol 2)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Status\", \"Is featured\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 5,
+    "fields": {
+        "action_time": "2026-03-15T19:48:15.932Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "library",
+            "book"
+        ],
+        "object_id": "2",
+        "object_repr": "The Translation of the Meanings of Sahih Al-Bukhari (vol 2)",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 4,
+    "fields": {
+        "action_time": "2026-03-15T19:44:20.904Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "library",
+            "book"
+        ],
+        "object_id": "2",
+        "object_repr": "The Translation of the Meanings of Sahih Al-Bukhari (vol 2)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Status\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 3,
+    "fields": {
+        "action_time": "2026-03-14T09:37:32.830Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "library",
+            "book"
+        ],
+        "object_id": "1",
+        "object_repr": "The Translation of the Meanings of Sahih Al-Bukhari",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Status\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 2,
+    "fields": {
+        "action_time": "2026-03-13T18:37:26.954Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "blog",
+            "scholararticlecomment"
+        ],
+        "object_id": "1",
+        "object_repr": "Comment by admin on test",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Comment text\", \"Is approved\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 1,
+    "fields": {
+        "action_time": "2026-03-13T18:36:31.813Z",
+        "user": [
+            "admin"
+        ],
+        "content_type": [
+            "blog",
+            "scholararticle"
+        ],
+        "object_id": "1",
+        "object_repr": "test",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add log entry",
+        "content_type": [
+            "admin",
+            "logentry"
+        ],
+        "codename": "add_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change log entry",
+        "content_type": [
+            "admin",
+            "logentry"
+        ],
+        "codename": "change_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete log entry",
+        "content_type": [
+            "admin",
+            "logentry"
+        ],
+        "codename": "delete_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view log entry",
+        "content_type": [
+            "admin",
+            "logentry"
+        ],
+        "codename": "view_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add group",
+        "content_type": [
+            "auth",
+            "group"
+        ],
+        "codename": "add_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change group",
+        "content_type": [
+            "auth",
+            "group"
+        ],
+        "codename": "change_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete group",
+        "content_type": [
+            "auth",
+            "group"
+        ],
+        "codename": "delete_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view group",
+        "content_type": [
+            "auth",
+            "group"
+        ],
+        "codename": "view_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add permission",
+        "content_type": [
+            "auth",
+            "permission"
+        ],
+        "codename": "add_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change permission",
+        "content_type": [
+            "auth",
+            "permission"
+        ],
+        "codename": "change_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete permission",
+        "content_type": [
+            "auth",
+            "permission"
+        ],
+        "codename": "delete_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view permission",
+        "content_type": [
+            "auth",
+            "permission"
+        ],
+        "codename": "view_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add user",
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "codename": "add_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change user",
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "codename": "change_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete user",
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "codename": "delete_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view user",
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "codename": "view_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add Scholar Biography",
+        "content_type": [
+            "blog",
+            "scholararticle"
+        ],
+        "codename": "add_scholararticle"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change Scholar Biography",
+        "content_type": [
+            "blog",
+            "scholararticle"
+        ],
+        "codename": "change_scholararticle"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete Scholar Biography",
+        "content_type": [
+            "blog",
+            "scholararticle"
+        ],
+        "codename": "delete_scholararticle"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view Scholar Biography",
+        "content_type": [
+            "blog",
+            "scholararticle"
+        ],
+        "codename": "view_scholararticle"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add Comment",
+        "content_type": [
+            "blog",
+            "scholararticlecomment"
+        ],
+        "codename": "add_scholararticlecomment"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change Comment",
+        "content_type": [
+            "blog",
+            "scholararticlecomment"
+        ],
+        "codename": "change_scholararticlecomment"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete Comment",
+        "content_type": [
+            "blog",
+            "scholararticlecomment"
+        ],
+        "codename": "delete_scholararticlecomment"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view Comment",
+        "content_type": [
+            "blog",
+            "scholararticlecomment"
+        ],
+        "codename": "view_scholararticlecomment"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add content type",
+        "content_type": [
+            "contenttypes",
+            "contenttype"
+        ],
+        "codename": "add_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change content type",
+        "content_type": [
+            "contenttypes",
+            "contenttype"
+        ],
+        "codename": "change_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete content type",
+        "content_type": [
+            "contenttypes",
+            "contenttype"
+        ],
+        "codename": "delete_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view content type",
+        "content_type": [
+            "contenttypes",
+            "contenttype"
+        ],
+        "codename": "view_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add book",
+        "content_type": [
+            "library",
+            "book"
+        ],
+        "codename": "add_book"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change book",
+        "content_type": [
+            "library",
+            "book"
+        ],
+        "codename": "change_book"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete book",
+        "content_type": [
+            "library",
+            "book"
+        ],
+        "codename": "delete_book"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view book",
+        "content_type": [
+            "library",
+            "book"
+        ],
+        "codename": "view_book"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add Bookmark",
+        "content_type": [
+            "library",
+            "bookbookmark"
+        ],
+        "codename": "add_bookbookmark"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change Bookmark",
+        "content_type": [
+            "library",
+            "bookbookmark"
+        ],
+        "codename": "change_bookbookmark"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete Bookmark",
+        "content_type": [
+            "library",
+            "bookbookmark"
+        ],
+        "codename": "delete_bookbookmark"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view Bookmark",
+        "content_type": [
+            "library",
+            "bookbookmark"
+        ],
+        "codename": "view_bookbookmark"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add category",
+        "content_type": [
+            "library",
+            "category"
+        ],
+        "codename": "add_category"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change category",
+        "content_type": [
+            "library",
+            "category"
+        ],
+        "codename": "change_category"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete category",
+        "content_type": [
+            "library",
+            "category"
+        ],
+        "codename": "delete_category"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view category",
+        "content_type": [
+            "library",
+            "category"
+        ],
+        "codename": "view_category"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add Issue Report",
+        "content_type": [
+            "library",
+            "issuereport"
+        ],
+        "codename": "add_issuereport"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change Issue Report",
+        "content_type": [
+            "library",
+            "issuereport"
+        ],
+        "codename": "change_issuereport"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete Issue Report",
+        "content_type": [
+            "library",
+            "issuereport"
+        ],
+        "codename": "delete_issuereport"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view Issue Report",
+        "content_type": [
+            "library",
+            "issuereport"
+        ],
+        "codename": "view_issuereport"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add knowledge domain",
+        "content_type": [
+            "library",
+            "knowledgedomain"
+        ],
+        "codename": "add_knowledgedomain"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change knowledge domain",
+        "content_type": [
+            "library",
+            "knowledgedomain"
+        ],
+        "codename": "change_knowledgedomain"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete knowledge domain",
+        "content_type": [
+            "library",
+            "knowledgedomain"
+        ],
+        "codename": "delete_knowledgedomain"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view knowledge domain",
+        "content_type": [
+            "library",
+            "knowledgedomain"
+        ],
+        "codename": "view_knowledgedomain"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add language",
+        "content_type": [
+            "library",
+            "language"
+        ],
+        "codename": "add_language"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change language",
+        "content_type": [
+            "library",
+            "language"
+        ],
+        "codename": "change_language"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete language",
+        "content_type": [
+            "library",
+            "language"
+        ],
+        "codename": "delete_language"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view language",
+        "content_type": [
+            "library",
+            "language"
+        ],
+        "codename": "view_language"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add Library Feedback",
+        "content_type": [
+            "library",
+            "libraryfeedback"
+        ],
+        "codename": "add_libraryfeedback"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change Library Feedback",
+        "content_type": [
+            "library",
+            "libraryfeedback"
+        ],
+        "codename": "change_libraryfeedback"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete Library Feedback",
+        "content_type": [
+            "library",
+            "libraryfeedback"
+        ],
+        "codename": "delete_libraryfeedback"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view Library Feedback",
+        "content_type": [
+            "library",
+            "libraryfeedback"
+        ],
+        "codename": "view_libraryfeedback"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add scholar",
+        "content_type": [
+            "library",
+            "scholar"
+        ],
+        "codename": "add_scholar"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change scholar",
+        "content_type": [
+            "library",
+            "scholar"
+        ],
+        "codename": "change_scholar"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete scholar",
+        "content_type": [
+            "library",
+            "scholar"
+        ],
+        "codename": "delete_scholar"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view scholar",
+        "content_type": [
+            "library",
+            "scholar"
+        ],
+        "codename": "view_scholar"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can add session",
+        "content_type": [
+            "sessions",
+            "session"
+        ],
+        "codename": "add_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can change session",
+        "content_type": [
+            "sessions",
+            "session"
+        ],
+        "codename": "change_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can delete session",
+        "content_type": [
+            "sessions",
+            "session"
+        ],
+        "codename": "delete_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "fields": {
+        "name": "Can view session",
+        "content_type": [
+            "sessions",
+            "session"
+        ],
+        "codename": "view_session"
+    }
+},
+{
+    "model": "auth.user",
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$uGC3q7ObqVVvV3CCLNsCMB$bqQ3ufSlgUcc+UIECMA83yQ5W8JX7T4QifsZD+p8qBk=",
+        "last_login": "2026-03-15T21:01:39.585Z",
+        "is_superuser": true,
+        "username": "admin",
+        "first_name": "",
+        "last_name": "",
+        "email": "admin@example.com",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2026-03-10T20:51:09.253Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$4qrbonje6g59x9hC9TBzbK$E1+NEZhIp4ztfCFCDdlZCRDW0s6ahiiuINkGY+b/eSQ=",
+        "last_login": "2026-03-15T16:09:20.884Z",
+        "is_superuser": false,
+        "username": "testuser_antigravity",
+        "first_name": "",
+        "last_name": "",
+        "email": "test_anti@example.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-03-15T16:03:47.666Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "wfpqeln9ky12j3h46bgwb7t3v8a6coic",
+    "fields": {
+        "session_data": ".eJxVjDsOwjAQBe_iGln-xbEp6TmDtfbu4gBypDipEHeHSCmgfTPzXiLBtta0dVrShOIsjDj9bhnKg9oO8A7tNssyt3WZstwVedAurzPS83K4fwcVev3WxXiNblCYIURvWAW2qoA1kR0xeeWAs4oUNOmRrcVCAbINEcfBIQfx_gDuYDhu:1w1o1o:H0ozAxxkgf6TetnEroX-WhU0o4vP2Tl7ltNxe53m6J0",
+        "expire_date": "2026-03-29T16:09:20.892Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "q1fnuwt3u2lwyj9b9jltxckwcypm47oe",
+    "fields": {
+        "session_data": ".eJxVjEEOgjAQRe_StWlaWpypS_ecgcx0BkENTSisjHdXEha6_e-9_zI9bevYb1WXfhJzMd6cfjem_NB5B3Kn-VZsLvO6TGx3xR602q6IPq-H-3cwUh2_tfMM6BKAuDZ6kYjAkSJD48Pgckig2ig6lHYQFGLBoOchJiLOicG8P89COD4:1w1sah:_gWjCFCBkLpaTr25RKeisrZSaPe-NC-anYSKJIwPsxo",
+        "expire_date": "2026-03-29T21:01:39.592Z"
+    }
+},
+{
+    "model": "library.knowledgedomain",
+    "pk": 1,
+    "fields": {
+        "name": "Religious Knowledge",
+        "slug": "religious-knowledge",
+        "description": "Traditional Islamic religious sciences — Qur'an, Hadith, Fiqh, Aqeedah, and more.",
+        "icon": "📖",
+        "order": 1
+    }
+},
+{
+    "model": "library.knowledgedomain",
+    "pk": 2,
+    "fields": {
+        "name": "Islamic Sciences",
+        "slug": "islamic-sciences",
+        "description": "Muslim contributions to worldly knowledge — Astronomy, Mathematics, Medicine, and more.",
+        "icon": "🔬",
+        "order": 2
+    }
+},
+{
+    "model": "library.category",
+    "pk": 9,
+    "fields": {
+        "name": "Astronomy",
+        "slug": "astronomy",
+        "description": "Islamic contributions to celestial observation, star catalogues, and cosmology.",
+        "knowledge_domain": 2,
+        "icon": "",
+        "order": 1
+    }
+},
+{
+    "model": "library.category",
+    "pk": 1,
+    "fields": {
+        "name": "Qur'an",
+        "slug": "quran",
+        "description": "The Holy Qur'an — recitations, translations, and manuscripts.",
+        "knowledge_domain": 1,
+        "icon": "",
+        "order": 1
+    }
+},
+{
+    "model": "library.category",
+    "pk": 10,
+    "fields": {
+        "name": "Mathematics",
+        "slug": "mathematics",
+        "description": "Algebra, geometry, trigonometry, and number theory from Muslim mathematicians.",
+        "knowledge_domain": 2,
+        "icon": "",
+        "order": 2
+    }
+},
+{
+    "model": "library.category",
+    "pk": 2,
+    "fields": {
+        "name": "Tafsir",
+        "slug": "tafsir",
+        "description": "Qur'anic exegesis and commentary by renowned scholars.",
+        "knowledge_domain": 1,
+        "icon": "",
+        "order": 2
+    }
+},
+{
+    "model": "library.category",
+    "pk": 3,
+    "fields": {
+        "name": "Hadith",
+        "slug": "hadith",
+        "description": "Collections of Prophetic traditions (ahadith).",
+        "knowledge_domain": 1,
+        "icon": "",
+        "order": 3
+    }
+},
+{
+    "model": "library.category",
+    "pk": 11,
+    "fields": {
+        "name": "Medicine",
+        "slug": "medicine",
+        "description": "Medical texts and pharmacology from Islamic golden age physicians.",
+        "knowledge_domain": 2,
+        "icon": "",
+        "order": 3
+    }
+},
+{
+    "model": "library.category",
+    "pk": 4,
+    "fields": {
+        "name": "Fiqh",
+        "slug": "fiqh",
+        "description": "Islamic jurisprudence across major schools of thought.",
+        "knowledge_domain": 1,
+        "icon": "",
+        "order": 4
+    }
+},
+{
+    "model": "library.category",
+    "pk": 12,
+    "fields": {
+        "name": "Physics",
+        "slug": "physics",
+        "description": "Mechanics, optics experiments, and physical theories by Muslim scientists.",
+        "knowledge_domain": 2,
+        "icon": "",
+        "order": 4
+    }
+},
+{
+    "model": "library.category",
+    "pk": 5,
+    "fields": {
+        "name": "Aqeedah",
+        "slug": "aqeedah",
+        "description": "Islamic creed and theology.",
+        "knowledge_domain": 1,
+        "icon": "",
+        "order": 5
+    }
+},
+{
+    "model": "library.category",
+    "pk": 13,
+    "fields": {
+        "name": "Chemistry",
+        "slug": "chemistry",
+        "description": "Alchemy, chemical processes, and distillation — foundations of modern chemistry.",
+        "knowledge_domain": 2,
+        "icon": "",
+        "order": 5
+    }
+},
+{
+    "model": "library.category",
+    "pk": 14,
+    "fields": {
+        "name": "Philosophy",
+        "slug": "philosophy",
+        "description": "Islamic philosophy, logic, and metaphysics from Muslim thinkers.",
+        "knowledge_domain": 2,
+        "icon": "",
+        "order": 6
+    }
+},
+{
+    "model": "library.category",
+    "pk": 6,
+    "fields": {
+        "name": "Seerah",
+        "slug": "seerah",
+        "description": "Biography of the Prophet Muhammad ﷺ.",
+        "knowledge_domain": 1,
+        "icon": "",
+        "order": 6
+    }
+},
+{
+    "model": "library.category",
+    "pk": 15,
+    "fields": {
+        "name": "Geography",
+        "slug": "geography",
+        "description": "Cartography, travel accounts, and geographical treatises.",
+        "knowledge_domain": 2,
+        "icon": "",
+        "order": 7
+    }
+},
+{
+    "model": "library.category",
+    "pk": 7,
+    "fields": {
+        "name": "Islamic History",
+        "slug": "islamic-history",
+        "description": "History of Islam, caliphates, and Muslim civilizations.",
+        "knowledge_domain": 1,
+        "icon": "",
+        "order": 7
+    }
+},
+{
+    "model": "library.category",
+    "pk": 8,
+    "fields": {
+        "name": "Arabic Language",
+        "slug": "arabic-language",
+        "description": "Arabic grammar, morphology, and rhetoric.",
+        "knowledge_domain": 1,
+        "icon": "",
+        "order": 8
+    }
+},
+{
+    "model": "library.category",
+    "pk": 16,
+    "fields": {
+        "name": "Engineering",
+        "slug": "engineering",
+        "description": "Mechanical devices, hydraulics, and architectural innovations.",
+        "knowledge_domain": 2,
+        "icon": "",
+        "order": 8
+    }
+},
+{
+    "model": "library.category",
+    "pk": 17,
+    "fields": {
+        "name": "Optics",
+        "slug": "optics",
+        "description": "Scientific study of light, vision, and optical instruments.",
+        "knowledge_domain": 2,
+        "icon": "",
+        "order": 9
+    }
+},
+{
+    "model": "library.category",
+    "pk": 18,
+    "fields": {
+        "name": "Logic",
+        "slug": "logic",
+        "description": "Formal logic, dialectics, and analytical reasoning.",
+        "knowledge_domain": 2,
+        "icon": "",
+        "order": 10
+    }
+},
+{
+    "model": "library.scholar",
+    "pk": 3,
+    "fields": {
+        "name": "Al-Biruni",
+        "slug": "al-biruni",
+        "birth_year": 973,
+        "death_year": 1048,
+        "bio": "Polymath who contributed to astronomy, mathematics, geography, and anthropology. Accurately calculated Earth's circumference.",
+        "field_of_expertise": "Astronomy"
+    }
+},
+{
+    "model": "library.scholar",
+    "pk": 7,
+    "fields": {
+        "name": "Al-Idrisi",
+        "slug": "al-idrisi",
+        "birth_year": 1100,
+        "death_year": 1165,
+        "bio": "Arab geographer and cartographer who created the famous 'Tabula Rogeriana', one of the most advanced world maps of the medieval era.",
+        "field_of_expertise": "Geography"
+    }
+},
+{
+    "model": "library.scholar",
+    "pk": 8,
+    "fields": {
+        "name": "Al-Jazari",
+        "slug": "al-jazari",
+        "birth_year": 1136,
+        "death_year": 1206,
+        "bio": "Polymath inventor and mechanical engineer. Author of 'The Book of Knowledge of Ingenious Mechanical Devices', a masterpiece of engineering.",
+        "field_of_expertise": "Engineering"
+    }
+},
+{
+    "model": "library.scholar",
+    "pk": 2,
+    "fields": {
+        "name": "Al-Khwarizmi",
+        "slug": "al-khwarizmi",
+        "birth_year": 780,
+        "death_year": 850,
+        "bio": "Persian mathematician, astronomer, and geographer. Father of algebra — the word 'algorithm' derives from his name.",
+        "field_of_expertise": "Mathematics"
+    }
+},
+{
+    "model": "library.scholar",
+    "pk": 4,
+    "fields": {
+        "name": "Ibn Rushd (Averroes)",
+        "slug": "ibn-rushd-averroes",
+        "birth_year": 1126,
+        "death_year": 1198,
+        "bio": "Andalusian philosopher, physician, and jurist. Known for commentaries on Aristotle that influenced European thought.",
+        "field_of_expertise": "Philosophy"
+    }
+},
+{
+    "model": "library.scholar",
+    "pk": 1,
+    "fields": {
+        "name": "Ibn Sina (Avicenna)",
+        "slug": "ibn-sina-avicenna",
+        "birth_year": 980,
+        "death_year": 1037,
+        "bio": "Persian polymath regarded as the father of early modern medicine. Author of 'The Canon of Medicine', the standard medical textbook for centuries.",
+        "field_of_expertise": "Medicine"
+    }
+},
+{
+    "model": "library.scholar",
+    "pk": 5,
+    "fields": {
+        "name": "Ibn al-Haytham (Alhazen)",
+        "slug": "ibn-al-haytham-alhazen",
+        "birth_year": 965,
+        "death_year": 1040,
+        "bio": "Father of modern optics. His 'Book of Optics' revolutionized understanding of light, vision, and the scientific method.",
+        "field_of_expertise": "Optics"
+    }
+},
+{
+    "model": "library.scholar",
+    "pk": 9,
+    "fields": {
+        "name": "Imam Al-Bukhari",
+        "slug": "imam-al-bukhari",
+        "birth_year": null,
+        "death_year": null,
+        "bio": "",
+        "field_of_expertise": ""
+    }
+},
+{
+    "model": "library.scholar",
+    "pk": 6,
+    "fields": {
+        "name": "Jabir ibn Hayyan",
+        "slug": "jabir-ibn-hayyan",
+        "birth_year": 721,
+        "death_year": 815,
+        "bio": "Known as the father of chemistry (alchemy). Introduced experimental methodology and numerous chemical processes still used today.",
+        "field_of_expertise": "Chemistry"
+    }
+},
+{
+    "model": "library.language",
+    "pk": 1,
+    "fields": {
+        "name": "Arabic",
+        "code": "ar"
+    }
+},
+{
+    "model": "library.language",
+    "pk": 8,
+    "fields": {
+        "name": "Bengali",
+        "code": "bn"
+    }
+},
+{
+    "model": "library.language",
+    "pk": 2,
+    "fields": {
+        "name": "English",
+        "code": "en"
+    }
+},
+{
+    "model": "library.language",
+    "pk": 4,
+    "fields": {
+        "name": "French",
+        "code": "fr"
+    }
+},
+{
+    "model": "library.language",
+    "pk": 7,
+    "fields": {
+        "name": "Indonesian",
+        "code": "id"
+    }
+},
+{
+    "model": "library.language",
+    "pk": 9,
+    "fields": {
+        "name": "Latin",
+        "code": "la"
+    }
+},
+{
+    "model": "library.language",
+    "pk": 6,
+    "fields": {
+        "name": "Malay",
+        "code": "ms"
+    }
+},
+{
+    "model": "library.language",
+    "pk": 10,
+    "fields": {
+        "name": "Persian",
+        "code": "fa"
+    }
+},
+{
+    "model": "library.language",
+    "pk": 5,
+    "fields": {
+        "name": "Turkish",
+        "code": "tr"
+    }
+},
+{
+    "model": "library.language",
+    "pk": 3,
+    "fields": {
+        "name": "Urdu",
+        "code": "ur"
+    }
+},
+{
+    "model": "library.book",
+    "pk": 3,
+    "fields": {
+        "title": "The Translation of the Meanings of Sahih Al-Bukhari (vol 2)",
+        "slug": "the-translation-of-the-meanings-of-sahih-al-bukhari-vol-2",
+        "description": "",
+        "knowledge_domain": 1,
+        "scholar": 9,
+        "category": 3,
+        "language": 2,
+        "uploaded_by": [
+            "admin"
+        ],
+        "pdf_file": "books/religious-knowledge/hadith/imam-al-bukhari/the-translation-of-the-meanings-of-sahi_JQymXtP.pdf",
+        "cover_image": "",
+        "status": "approved",
+        "is_featured": true,
+        "views": 29,
+        "downloads": 3,
+        "created_at": "2026-03-15T19:49:14.820Z",
+        "updated_at": "2026-03-15T19:52:06.070Z"
+    }
+},
+{
+    "model": "library.book",
+    "pk": 1,
+    "fields": {
+        "title": "The Translation of the Meanings of Sahih Al-Bukhari",
+        "slug": "the-translation-of-the-meanings-of-sahih-al-bukhari",
+        "description": "Translation of the Meanings, Sahih Al-Bukhari, - Arabic-English, 9 Volumes, Muhammad Muhsin Khan",
+        "knowledge_domain": 1,
+        "scholar": 9,
+        "category": 3,
+        "language": 2,
+        "uploaded_by": [
+            "admin"
+        ],
+        "pdf_file": "books/religious-knowledge/hadith/imam-al-bukhari/the-translation-of-the-meanings-of-sahi_Lk9ZRcN.pdf",
+        "cover_image": "",
+        "status": "approved",
+        "is_featured": false,
+        "views": 9,
+        "downloads": 3,
+        "created_at": "2026-03-14T09:36:26.677Z",
+        "updated_at": "2026-03-14T09:37:32.824Z"
+    }
+},
+{
+    "model": "library.bookbookmark",
+    "pk": 1,
+    "fields": {
+        "user": [
+            "admin"
+        ],
+        "book": 1,
+        "created_at": "2026-03-14T09:38:48.751Z"
+    }
+},
+{
+    "model": "library.libraryfeedback",
+    "pk": 1,
+    "fields": {
+        "user": [
+            "admin"
+        ],
+        "name": "Test User",
+        "email": "admin@example.com",
+        "message": "I suggest adding a reading list feature so users can bookmark books they want to read later.",
+        "created_at": "2026-03-10T22:53:15.425Z"
+    }
+},
+{
+    "model": "blog.scholararticle",
+    "pk": 2,
+    "fields": {
+        "title": "hjvjvh",
+        "slug": "hjvjvh",
+        "scholar": 3,
+        "knowledge_domain": "Islamic Sciences",
+        "cover_image": "scholars/islamic-sciences/al-biruni/cover.jpg",
+        "short_description": "khgjh",
+        "content": "<p>kjbhbj</p>",
+        "author": [
+            "admin"
+        ],
+        "created_at": "2026-03-15T21:39:37.373Z",
+        "updated_at": "2026-03-15T21:39:37.373Z",
+        "is_published": true
+    }
+},
+{
+    "model": "blog.scholararticle",
+    "pk": 1,
+    "fields": {
+        "title": "test",
+        "slug": "test",
+        "scholar": 3,
+        "knowledge_domain": "Religious Knowledge",
+        "cover_image": "scholars/religious-knowledge/al-biruni/cover.jpg",
+        "short_description": "test",
+        "content": "<p>hello&nbsp;</p>",
+        "author": [
+            "admin"
+        ],
+        "created_at": "2026-03-13T18:36:31.811Z",
+        "updated_at": "2026-03-15T21:22:44.781Z",
+        "is_published": true
+    }
+},
+{
+    "model": "blog.scholararticlecomment",
+    "pk": 1,
+    "fields": {
+        "article": 1,
+        "user": [
+            "admin"
+        ],
+        "comment_text": "test",
+        "created_at": "2026-03-13T18:36:57.156Z",
+        "is_approved": true
+    }
+}
+]
