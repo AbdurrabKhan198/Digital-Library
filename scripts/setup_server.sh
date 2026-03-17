@@ -14,14 +14,17 @@ sudo apt update && sudo apt upgrade -y
 sudo apt install -y python3-pip python3-venv git nginx postgresql postgresql-contrib curl
 
 # 2. Database Creation (PostgreSQL)
-echo "🐘 Creating PostgreSQL Database..."
+echo "🐘 Configuring PostgreSQL Database..."
 DB_NAME="islamic_library"
 DB_USER="lib_user"
 DB_PASSWORD=$(openssl rand -base64 12)
 
-sudo -u postgres psql -c "CREATE DATABASE $DB_NAME;"
-sudo -u postgres psql -c "CREATE USER $DB_USER WITH PASSWORD '$DB_PASSWORD';"
+# Create database and user if they don't exist, else just update password
+sudo -u postgres psql -c "CREATE DATABASE $DB_NAME;" 2>/dev/null || true
+sudo -u postgres psql -c "CREATE USER $DB_USER WITH PASSWORD '$DB_PASSWORD';" 2>/dev/null || true
+sudo -u postgres psql -c "ALTER USER $DB_USER WITH PASSWORD '$DB_PASSWORD';"
 sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE $DB_NAME TO $DB_USER;"
+sudo -u postgres psql -c "ALTER DATABASE $DB_NAME OWNER TO $DB_USER;"
 
 # 3. Project Directory Management
 echo "📂 Setting up project directory..."
