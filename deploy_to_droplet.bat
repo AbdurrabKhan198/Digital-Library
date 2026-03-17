@@ -2,7 +2,7 @@
 setlocal
 
 :: 1. Configuration (UPDATE THESE VALUES)
-set DROPLET_IP=YOUR_DROPLET_IP_HERE
+set DROPLET_IP=159.65.151.229
 set DROPLET_USER=root
 set PROJECT_DIR=/home/islamic-library
 
