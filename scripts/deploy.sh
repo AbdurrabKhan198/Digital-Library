@@ -6,16 +6,13 @@ REPO_URL="https://github.com/AbdurrabKhan198/Digital-Library.git"
 
 echo "🚀 Starting Deployment on DigitalOcean Droplet..."
 
-# 1. Update/Clone Project
-if [ ! -d "$PROJECT_DIR" ]; then
-    echo "📂 Cloning repository for the first time..."
-    git clone $REPO_URL $PROJECT_DIR
-    cd $PROJECT_DIR
-else
-    echo "🔄 Pulling latest changes from GitHub..."
-    cd $PROJECT_DIR
-    git pull origin main
-fi
+# 1. Update/Project Pull
+cd $PROJECT_DIR
+echo "🔄 Fetching latest changes from GitHub..."
+git init 2>/dev/null || true
+git remote add origin $REPO_URL 2>/dev/null || true
+git fetch origin main
+git reset --hard origin/main
 
 # 2. Virtual Environment Setup
 if [ ! -d "venv" ]; then

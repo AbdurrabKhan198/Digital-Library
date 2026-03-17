@@ -29,15 +29,13 @@ sudo mkdir -p $PROJECT_DIR
 sudo chown $USER:$USER $PROJECT_DIR
 cd $PROJECT_DIR
 
-# 4. Git Connection
-if [ ! -d ".git" ]; then
-    echo "🔗 Initializing Git and pulling files..."
-    git init
-    git remote add origin https://github.com/AbdurrabKhan198/Digital-Library.git
-    git pull origin main
-else
-    git pull origin main
-fi
+# 4. Git Connection (Forced Pull)
+echo "🔗 Fetching project files from GitHub..."
+git init
+git remote add origin https://github.com/AbdurrabKhan198/Digital-Library.git 2>/dev/null || true
+git fetch origin main
+git checkout -f main
+git reset --hard origin/main
 
 # 5. Virtual Environment & Requirements
 echo "📦 Setting up python environment..."
