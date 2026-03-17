@@ -12,8 +12,8 @@ from django.contrib.contenttypes.models import ContentType
 
 def dump_it():
     print("📦 Exporting local data (UTF-8)...")
-    # Exclude contenttypes and permissions to avoid conflicts on server
-    excluded_apps = ['contenttypes', 'auth.Permission']
+    # Exclude internal Django apps that cause integrity issues
+    excluded_apps = ['contenttypes', 'auth.Permission', 'admin', 'sessions']
     
     # Get all models except excluded ones
     objects = []
