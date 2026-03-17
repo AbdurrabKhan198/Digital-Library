@@ -163,12 +163,22 @@ if USE_S3:
     AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
     AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME")
     AWS_S3_REGION_NAME = config("AWS_S3_REGION_NAME", default="us-east-1")
+    AWS_S3_ENDPOINT_URL = config("AWS_S3_ENDPOINT_URL", default=None)
 
     # S3 settings
-    AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
+    if AWS_S3_ENDPOINT_URL:
+        # For R2/S3-compatible storage
+        AWS_S3_CUSTOM_DOMAIN = config("AWS_S3_CUSTOM_DOMAIN", default=None)
+    else:
+        AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
+
     AWS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=86400"}
     AWS_DEFAULT_ACL = None
     AWS_S3_FILE_OVERWRITE = False
+    
+    # R2 requires s3v4 signature
+    if "cloudflarestorage.com" in (AWS_S3_ENDPOINT_URL or ""):
+        AWS_S3_SIGNATURE_VERSION = "s3v4"
 
     # Storage backends
     STORAGES = {
@@ -180,7 +190,12 @@ if USE_S3:
         },
     }
 
-    MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
+    if AWS_S3_CUSTOM_DOMAIN:
+        MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
+    elif AWS_S3_ENDPOINT_URL:
+        MEDIA_URL = f"{AWS_S3_ENDPOINT_URL}/{AWS_STORAGE_BUCKET_NAME}/media/"
+    else:
+        MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
 
 
 # =============================================================================

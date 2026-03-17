@@ -346,12 +346,17 @@ def pdf_proxy(request, slug):
         from botocore.exceptions import ClientError
         
         # Initialize S3 client with project settings
-        s3 = boto3.client(
-            's3',
-            aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
-            aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
-            region_name=settings.AWS_S3_REGION_NAME
-        )
+        s3_kwargs = {
+            'aws_access_key_id': settings.AWS_ACCESS_KEY_ID,
+            'aws_secret_access_key': settings.AWS_SECRET_ACCESS_KEY,
+            'region_name': settings.AWS_S3_REGION_NAME,
+        }
+        
+        # Add endpoint for R2/S3-compatible storage
+        if hasattr(settings, 'AWS_S3_ENDPOINT_URL') and settings.AWS_S3_ENDPOINT_URL:
+            s3_kwargs['endpoint_url'] = settings.AWS_S3_ENDPOINT_URL
+            
+        s3 = boto3.client('s3', **s3_kwargs)
         
         try:
             # The S3 Key is the pdf_file.name
