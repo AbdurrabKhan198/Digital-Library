@@ -358,8 +358,14 @@ def pdf_proxy(request, slug):
         s3 = boto3.client('s3', **s3_kwargs)
         
         try:
-            # The S3 Key is the pdf_file.name
+            # The S3 Key is the pdf_file.name (maybe prefixed with AWS_LOCATION)
             file_key = book.pdf_file.name
+            
+            # Ensure the media prefix is included if using R2 and it's not already there
+            remote_prefix = getattr(settings, 'AWS_LOCATION', '')
+            if remote_prefix and not file_key.startswith(remote_prefix):
+                file_key = f"{remote_prefix}/{file_key}".replace("//", "/")
+            
             s3_response = s3.get_object(Bucket=settings.AWS_STORAGE_BUCKET_NAME, Key=file_key)
             
             # Stream the Body (StreamingBody) directly to the client
