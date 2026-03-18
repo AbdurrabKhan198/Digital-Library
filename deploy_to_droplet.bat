@@ -17,11 +17,7 @@ git commit -m "Auto-deploy: Update for server"
 echo 📤 Pushing to GitHub...
 git push origin main
 
-:: 3. Upload .env to server (credentials are not in git)
-echo 🔑 Uploading .env to server...
-scp .env %DROPLET_USER%@%DROPLET_IP%:%PROJECT_DIR%/.env
-
-:: 4. Connect to Droplet and Deploy
+:: 3. Connect to Droplet and Deploy
 echo 🔌 Connecting to DigitalOcean Droplet via SSH...
 ssh %DROPLET_USER%@%DROPLET_IP% "cd %PROJECT_DIR% && chmod +x scripts/deploy.sh && ./scripts/deploy.sh"
 
