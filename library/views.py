@@ -345,17 +345,16 @@ def pdf_proxy(request, slug):
         import boto3
         from botocore.exceptions import ClientError
         
-        # Initialize S3 client with project settings
+        # Initialize S3-compatible client (Cloudflare R2)
         s3_kwargs = {
             'aws_access_key_id': settings.AWS_ACCESS_KEY_ID,
             'aws_secret_access_key': settings.AWS_SECRET_ACCESS_KEY,
             'region_name': settings.AWS_S3_REGION_NAME,
         }
-        
-        # Add endpoint for R2/S3-compatible storage
-        if hasattr(settings, 'AWS_S3_ENDPOINT_URL') and settings.AWS_S3_ENDPOINT_URL:
+        # R2 requires the endpoint_url to route requests to Cloudflare
+        if hasattr(settings, 'AWS_S3_ENDPOINT_URL'):
             s3_kwargs['endpoint_url'] = settings.AWS_S3_ENDPOINT_URL
-            
+        
         s3 = boto3.client('s3', **s3_kwargs)
         
         try:

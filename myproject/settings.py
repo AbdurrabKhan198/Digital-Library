@@ -152,33 +152,34 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 
 # =============================================================================
-# AWS S3 STORAGE (Optional - controlled by USE_S3 env variable)
+# CLOUDFLARE R2 STORAGE (S3-compatible, controlled by USE_S3 env variable)
 # =============================================================================
 
 USE_S3 = config("USE_S3", default=False, cast=bool)
 
 if USE_S3:
-    # AWS credentials
+    # R2 credentials (S3-compatible)
     AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
     AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
     AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME")
-    AWS_S3_REGION_NAME = config("AWS_S3_REGION_NAME", default="us-east-1")
-    AWS_S3_ENDPOINT_URL = config("AWS_S3_ENDPOINT_URL", default=None)
+    AWS_S3_REGION_NAME = config("AWS_S3_REGION_NAME", default="auto")
 
-    # S3 settings
-    if AWS_S3_ENDPOINT_URL:
-        # For R2/S3-compatible storage
-        AWS_S3_CUSTOM_DOMAIN = config("AWS_S3_CUSTOM_DOMAIN", default=None)
-    else:
-        AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
+    # R2 endpoint — this is what makes boto3 talk to Cloudflare instead of AWS
+    AWS_S3_ENDPOINT_URL = config("AWS_S3_ENDPOINT_URL")
 
+    # Public access domain for serving files
+    # R2 public bucket URL format: pub-<hash>.r2.dev  (set this in .env if you have a custom domain)
+    AWS_S3_CUSTOM_DOMAIN = config(
+        "AWS_S3_CUSTOM_DOMAIN",
+        default=f"{AWS_STORAGE_BUCKET_NAME}.r2.dev"
+    )
+
+    # R2 settings
     AWS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=86400"}
     AWS_DEFAULT_ACL = None
     AWS_S3_FILE_OVERWRITE = False
-    
-    # R2 requires s3v4 signature
-    if "cloudflarestorage.com" in (AWS_S3_ENDPOINT_URL or ""):
-        AWS_S3_SIGNATURE_VERSION = "s3v4"
+    AWS_QUERYSTRING_AUTH = False  # R2 public buckets don't need signed URLs
+    AWS_LOCATION = "media"
 
     # Storage backends
     STORAGES = {
@@ -190,12 +191,7 @@ if USE_S3:
         },
     }
 
-    if AWS_S3_CUSTOM_DOMAIN:
-        MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
-    elif AWS_S3_ENDPOINT_URL:
-        MEDIA_URL = f"{AWS_S3_ENDPOINT_URL}/{AWS_STORAGE_BUCKET_NAME}/media/"
-    else:
-        MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
+    MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/"
 
 
 # =============================================================================
