@@ -165,7 +165,7 @@ if USE_S3:
     AWS_S3_REGION_NAME = config("AWS_S3_REGION_NAME", default="auto")
 
     # R2 endpoint — this is what makes boto3 talk to Cloudflare instead of AWS
-    AWS_S3_ENDPOINT_URL = config("AWS_S3_ENDPOINT_URL", default=f"https://{AWS_ACCESS_KEY_ID}.r2.cloudflarestorage.com")
+    AWS_S3_ENDPOINT_URL = config("AWS_S3_ENDPOINT_URL", default="https://b87bb6997ce754fe90163c7dbc3ef4dd.r2.cloudflarestorage.com")
 
     # Public access domain for serving files
     # R2 public bucket URL format: pub-<hash>.r2.dev  (set this in .env if you have a custom domain)
