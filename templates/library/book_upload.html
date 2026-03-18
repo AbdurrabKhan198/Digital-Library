@@ -186,6 +186,61 @@
     </div>
 </div>
 
+<!-- ====== UPLOAD PROGRESS OVERLAY ====== -->
+<div id="upload-overlay" style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.6); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); justify-content:center; align-items:center;">
+    <div style="background:#fff; border-radius:1.5rem; padding:2.5rem 2rem; max-width:420px; width:90%; box-shadow:0 25px 60px rgba(0,0,0,0.3); text-align:center;">
+
+        <!-- Animated upload icon -->
+        <div id="upload-icon-wrap" style="width:72px; height:72px; margin:0 auto 1.25rem; background:linear-gradient(135deg,#d1fae5,#ccfbf1); border-radius:1.25rem; display:flex; align-items:center; justify-content:center;">
+            <svg id="upload-arrow" style="width:36px; height:36px; color:#059669; animation:bounce-arrow 1.2s ease-in-out infinite;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+            </svg>
+            <svg id="upload-check" style="display:none; width:36px; height:36px; color:#059669;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path>
+            </svg>
+        </div>
+
+        <h3 id="upload-title" style="font-size:1.25rem; font-weight:700; color:#111827; margin-bottom:0.25rem;">Uploading your book...</h3>
+        <p id="upload-file-name" style="font-size:0.85rem; color:#6b7280; margin-bottom:1.5rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100%;"></p>
+
+        <!-- Progress bar -->
+        <div style="background:#f3f4f6; border-radius:999px; height:12px; overflow:hidden; margin-bottom:0.75rem; position:relative;">
+            <div id="progress-bar" style="height:100%; width:0%; border-radius:999px; background:linear-gradient(90deg,#10b981,#14b8a6,#10b981); background-size:200% 100%; animation:shimmer 2s linear infinite; transition:width 0.3s ease;"></div>
+        </div>
+
+        <!-- Stats row -->
+        <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.8rem; color:#9ca3af;">
+            <span id="upload-percent" style="font-size:1.5rem; font-weight:800; color:#059669;">0%</span>
+            <span id="upload-stats"></span>
+        </div>
+
+        <!-- Error message (hidden) -->
+        <div id="upload-error" style="display:none; margin-top:1rem; padding:0.75rem 1rem; background:#fef2f2; border:1px solid #fecaca; border-radius:0.75rem; color:#dc2626; font-size:0.85rem; text-align:left;"></div>
+
+        <!-- Cancel button -->
+        <button id="upload-cancel-btn" onclick="cancelUpload()" style="margin-top:1.25rem; padding:0.5rem 1.5rem; background:#f3f4f6; border:none; border-radius:0.75rem; color:#6b7280; font-weight:600; cursor:pointer; font-size:0.85rem; transition:background 0.2s;"
+                onmouseover="this.style.background='#e5e7eb'" onmouseout="this.style.background='#f3f4f6'">Cancel Upload</button>
+    </div>
+</div>
+
+<style>
+@keyframes bounce-arrow {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+@keyframes fade-in {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+#upload-overlay > div {
+    animation: fade-in 0.3s ease-out;
+}
+</style>
+
 {% endblock %}
 
 {% block extra_scripts %}
@@ -197,13 +252,9 @@
     if (domainSelect && categorySelect) {
         domainSelect.addEventListener('change', function() {
             const domainId = this.value;
-
-            // Clear current categories
             categorySelect.innerHTML = '<option value="">-- Select a category --</option>';
-
             if (!domainId) return;
 
-            // Fetch categories for selected domain
             fetch(`/api/categories-by-domain/?domain_id=${domainId}`)
                 .then(r => r.json())
                 .then(data => {
@@ -222,24 +273,18 @@
     const titleInput = document.getElementById('id_title');
     const scholarSelect = document.getElementById('id_scholar');
     const duplicateCheck = document.getElementById('duplicate-check');
-
     let debounceTimer;
 
     function checkDuplicate() {
         const title = titleInput?.value?.trim();
         const scholar = scholarSelect?.value;
-
         if (title && scholar) {
             clearTimeout(debounceTimer);
             debounceTimer = setTimeout(() => {
                 fetch(`/api/check-duplicate/?title=${encodeURIComponent(title)}&scholar=${scholar}`)
                     .then(r => r.json())
                     .then(data => {
-                        if (data.duplicate) {
-                            duplicateCheck.classList.remove('hidden');
-                        } else {
-                            duplicateCheck.classList.add('hidden');
-                        }
+                        duplicateCheck.classList.toggle('hidden', !data.duplicate);
                     })
                     .catch(() => {});
             }, 500);
@@ -247,8 +292,180 @@
             duplicateCheck.classList.add('hidden');
         }
     }
-
     titleInput?.addEventListener('input', checkDuplicate);
     scholarSelect?.addEventListener('change', checkDuplicate);
+
+    // ===== UPLOAD PROGRESS TRACKING =====
+    let activeXHR = null;
+    let uploadStartTime = 0;
+
+    function formatBytes(bytes) {
+        if (bytes === 0) return '0 B';
+        const k = 1024;
+        const sizes = ['B', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+    }
+
+    function cancelUpload() {
+        if (activeXHR) {
+            activeXHR.abort();
+            activeXHR = null;
+        }
+        document.getElementById('upload-overlay').style.display = 'none';
+        document.getElementById('submit-btn').disabled = false;
+    }
+
+    const uploadForm = document.getElementById('upload-form');
+    if (uploadForm) {
+        uploadForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            const overlay = document.getElementById('upload-overlay');
+            const progressBar = document.getElementById('progress-bar');
+            const percentText = document.getElementById('upload-percent');
+            const statsText = document.getElementById('upload-stats');
+            const fileNameEl = document.getElementById('upload-file-name');
+            const titleEl = document.getElementById('upload-title');
+            const errorEl = document.getElementById('upload-error');
+            const cancelBtn = document.getElementById('upload-cancel-btn');
+            const arrowIcon = document.getElementById('upload-arrow');
+            const checkIcon = document.getElementById('upload-check');
+            const iconWrap = document.getElementById('upload-icon-wrap');
+            const submitBtn = document.getElementById('submit-btn');
+
+            // Get file info
+            const pdfInput = document.getElementById('id_pdf_file');
+            const pdfFile = pdfInput?.files?.[0];
+            const fileName = pdfFile ? pdfFile.name : 'book file';
+            const fileSize = pdfFile ? pdfFile.size : 0;
+
+            // Reset overlay state
+            fileNameEl.textContent = '📄 ' + fileName + (fileSize ? ' (' + formatBytes(fileSize) + ')' : '');
+            titleEl.textContent = 'Uploading your book...';
+            titleEl.style.color = '#111827';
+            progressBar.style.width = '0%';
+            progressBar.style.background = 'linear-gradient(90deg,#10b981,#14b8a6,#10b981)';
+            percentText.textContent = '0%';
+            percentText.style.color = '#059669';
+            statsText.textContent = '';
+            errorEl.style.display = 'none';
+            cancelBtn.style.display = 'inline-block';
+            cancelBtn.textContent = 'Cancel Upload';
+            arrowIcon.style.display = 'block';
+            checkIcon.style.display = 'none';
+            iconWrap.style.background = 'linear-gradient(135deg,#d1fae5,#ccfbf1)';
+            submitBtn.disabled = true;
+
+            // Show overlay
+            overlay.style.display = 'flex';
+            uploadStartTime = Date.now();
+
+            // Create XHR for progress tracking
+            const xhr = new XMLHttpRequest();
+            activeXHR = xhr;
+
+            xhr.upload.addEventListener('progress', function(e) {
+                if (e.lengthComputable) {
+                    const pct = Math.round((e.loaded / e.total) * 100);
+                    progressBar.style.width = pct + '%';
+                    percentText.textContent = pct + '%';
+
+                    // Calculate speed & ETA
+                    const elapsed = (Date.now() - uploadStartTime) / 1000;
+                    const speed = e.loaded / elapsed;
+                    const remaining = (e.total - e.loaded) / speed;
+
+                    let statsStr = formatBytes(e.loaded) + ' / ' + formatBytes(e.total);
+                    if (elapsed > 1 && pct < 100) {
+                        statsStr += ' · ' + formatBytes(speed) + '/s';
+                        if (remaining > 0 && remaining < 3600) {
+                            const mins = Math.floor(remaining / 60);
+                            const secs = Math.ceil(remaining % 60);
+                            statsStr += ' · ' + (mins > 0 ? mins + 'm ' : '') + secs + 's left';
+                        }
+                    }
+                    statsText.textContent = statsStr;
+
+                    if (pct === 100) {
+                        titleEl.textContent = 'Processing your book...';
+                        statsText.textContent = 'Saving to cloud storage...';
+                        progressBar.style.background = 'linear-gradient(90deg,#10b981,#06b6d4,#10b981)';
+                    }
+                }
+            });
+
+            xhr.addEventListener('load', function() {
+                activeXHR = null;
+
+                if (xhr.status >= 200 && xhr.status < 400) {
+                    const responseURL = xhr.responseURL;
+
+                    // Show success state
+                    progressBar.style.width = '100%';
+                    percentText.textContent = '100%';
+                    titleEl.textContent = '✅ Upload Complete!';
+                    titleEl.style.color = '#059669';
+                    statsText.textContent = 'Redirecting...';
+                    cancelBtn.style.display = 'none';
+                    arrowIcon.style.display = 'none';
+                    checkIcon.style.display = 'block';
+                    iconWrap.style.background = 'linear-gradient(135deg,#d1fae5,#a7f3d0)';
+
+                    // Check if the response URL is the upload success page or the same page
+                    // If same page, it means there were form validation errors
+                    const currentPath = window.location.pathname;
+                    const responsePath = responseURL ? new URL(responseURL).pathname : '';
+
+                    if (responsePath && responsePath !== currentPath) {
+                        // Successfully redirected to success page
+                        setTimeout(() => { window.location.href = responseURL; }, 800);
+                    } else {
+                        // Form was re-rendered (validation errors) — reload with response
+                        submitBtn.disabled = false;
+                        overlay.style.display = 'none';
+                        document.open();
+                        document.write(xhr.responseText);
+                        document.close();
+                    }
+                } else {
+                    submitBtn.disabled = false;
+                    titleEl.textContent = '❌ Upload Failed';
+                    titleEl.style.color = '#dc2626';
+                    percentText.style.color = '#dc2626';
+                    iconWrap.style.background = 'linear-gradient(135deg,#fee2e2,#fecaca)';
+                    arrowIcon.style.display = 'none';
+                    errorEl.textContent = 'Server error (' + xhr.status + '). Please try again.';
+                    errorEl.style.display = 'block';
+                    statsText.textContent = '';
+                    cancelBtn.textContent = 'Close';
+                }
+            });
+
+            xhr.addEventListener('error', function() {
+                activeXHR = null;
+                submitBtn.disabled = false;
+                titleEl.textContent = '❌ Upload Failed';
+                titleEl.style.color = '#dc2626';
+                percentText.style.color = '#dc2626';
+                iconWrap.style.background = 'linear-gradient(135deg,#fee2e2,#fecaca)';
+                arrowIcon.style.display = 'none';
+                errorEl.textContent = 'Network error. Please check your connection and try again.';
+                errorEl.style.display = 'block';
+                statsText.textContent = '';
+                cancelBtn.textContent = 'Close';
+            });
+
+            xhr.addEventListener('abort', function() {
+                activeXHR = null;
+                submitBtn.disabled = false;
+            });
+
+            xhr.open('POST', this.action || window.location.href);
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            xhr.send(formData);
+        });
+    }
 </script>
 {% endblock %}
