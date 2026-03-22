@@ -54,7 +54,7 @@ class HomePageView(TemplateView):
         )
         context["recent_books"] = (
             approved.order_by("-created_at")
-            .select_related("scholar", "category", "language")[:10]
+            .select_related("scholar", "category", "language")[:4]
         )
         context["total_books"] = approved.count()
         context["total_scholars"] = Scholar.objects.count()
@@ -269,6 +269,12 @@ class ScholarDetailView(TemplateView):
         context = super().get_context_data(**kwargs)
         scholar = get_object_or_404(Scholar, slug=self.kwargs["slug"])
         context["scholar"] = scholar
+
+        # Increment biography view count
+        scholar.increment_bio_views()
+        # Refresh to get the updated count
+        scholar.refresh_from_db(fields=["bio_views"])
+        context["bio_views"] = scholar.bio_views
 
         books = (
             Book.objects.filter(status="approved", scholar=scholar)

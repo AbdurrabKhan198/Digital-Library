@@ -96,6 +96,7 @@ class Scholar(models.Model):
     birth_year = models.IntegerField(null=True, blank=True, help_text="Birth year (Gregorian)")
     death_year = models.IntegerField(null=True, blank=True, help_text="Death year (Gregorian)")
     bio = models.TextField(blank=True, help_text="Brief biography")
+    bio_views = models.PositiveIntegerField(default=0, help_text="Number of times the biography has been viewed")
     field_of_expertise = models.CharField(
         max_length=200,
         blank=True,
@@ -126,6 +127,10 @@ class Scholar(models.Model):
 
     def get_absolute_url(self):
         return reverse("library:scholar_detail", kwargs={"slug": self.slug})
+
+    def increment_bio_views(self):
+        """Increment biography view count atomically."""
+        Scholar.objects.filter(pk=self.pk).update(bio_views=models.F("bio_views") + 1)
 
 
 class Language(models.Model):
