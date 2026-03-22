@@ -38,6 +38,11 @@ class ArticleDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        # Increment views
+        self.object.increment_views()
+        # Refresh to get updated count
+        self.object.refresh_from_db(fields=['views'])
+        context['views'] = self.object.views
         context['comments'] = self.object.comments.filter(is_approved=True)
         return context
 

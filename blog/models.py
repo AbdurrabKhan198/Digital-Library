@@ -47,6 +47,7 @@ class ScholarArticle(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_published = models.BooleanField(default=False)
+    views = models.PositiveIntegerField(default=0)
 
     class Meta:
         ordering = ['-created_at']
@@ -57,6 +58,10 @@ class ScholarArticle(models.Model):
         if not self.slug:
             self.slug = slugify(self.title)
         super().save(*args, **kwargs)
+
+    def increment_views(self):
+        """Increment view count atomically."""
+        ScholarArticle.objects.filter(pk=self.pk).update(views=models.F("views") + 1)
 
     def __str__(self):
         return self.title
