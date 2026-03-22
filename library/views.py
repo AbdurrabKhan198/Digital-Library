@@ -252,7 +252,7 @@ class CategoryDetailView(TemplateView):
             .order_by("-created_at")[:4]
         )
         context["popular_books"] = approved_in_cat.order_by("-downloads")[:8]
-        context["recent_books"] = approved_in_cat.order_by("-created_at")[:8]
+        context["recent_books"] = approved_in_cat.order_by("-created_at")[:4]
         return context
 
 
