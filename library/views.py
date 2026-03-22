@@ -256,6 +256,36 @@ class CategoryDetailView(TemplateView):
         return context
 
 
+class ScholarListView(ListView):
+    """
+    Paginated list of all scholars with search support.
+    """
+    model = Scholar
+    template_name = "library/scholar_list.html"
+    context_object_name = "scholars"
+    paginate_by = 24
+
+    def get_queryset(self):
+        queryset = Scholar.objects.annotate(
+            book_count=Count('books', filter=Q(books__status='approved'))
+        ).order_by('name')
+
+        query = self.request.GET.get("q", "").strip()
+        if query:
+            queryset = queryset.filter(
+                Q(name__icontains=query) |
+                Q(field_of_expertise__icontains=query) |
+                Q(bio__icontains=query)
+            )
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["current_query"] = self.request.GET.get("q", "")
+        context["total_scholars"] = self.get_queryset().count()
+        return context
+
+
 class ScholarDetailView(TemplateView):
     """
     Public scholar profile page showing:

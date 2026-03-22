@@ -34,6 +34,7 @@ urlpatterns = [
     path("category/<slug:slug>/", views.CategoryDetailView.as_view(), name="category_detail"),
 
     # Scholars
+    path("scholars/", views.ScholarListView.as_view(), name="scholar_list"),
     path("scholar/<slug:slug>/", views.ScholarDetailView.as_view(), name="scholar_detail"),
 
     # Search

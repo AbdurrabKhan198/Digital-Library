@@ -29,12 +29,12 @@
                     <span>{{ article.author.get_full_name|default:article.author.username }}</span>
                 </div>
                 {% if article.scholar %}
-                <div class="flex items-center gap-2">
-                    <div class="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center text-teal-700">
+                <a href="{{ article.scholar.get_absolute_url }}" class="flex items-center gap-2 group/scholar">
+                    <div class="w-10 h-10 bg-teal-100 rounded-full flex items-center justify-center text-teal-700 group-hover/scholar:bg-teal-600 group-hover/scholar:text-white transition-all">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
                     </div>
-                    <span>Scholar: {{ article.scholar.name }}</span>
-                </div>
+                    <span class="group-hover/scholar:text-teal-700 transition-colors">Scholar: {{ article.scholar.name }}</span>
+                </a>
                 {% endif %}
                 <div class="flex items-center gap-2">
                     <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-500">
