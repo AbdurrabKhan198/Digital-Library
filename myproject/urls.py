@@ -12,7 +12,7 @@ urlpatterns = [
     path("ckeditor/", include("ckeditor_uploader.urls")),
     path("accounts/", include("accounts.urls")),
     # Blog / Scholar Biographies
-    path("scholars/", include("blog.urls")),
+    path("biographies/", include("blog.urls")),
     # Library app
     path("", include("library.urls")),
 ]

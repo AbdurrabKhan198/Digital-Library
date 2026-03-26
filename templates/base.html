@@ -218,23 +218,57 @@
     </main>
 
     <!-- ===== FOOTER ===== -->
-    <footer class="bg-gray-900 text-gray-400 mt-20 py-12">
-        <div class="max-w-4xl mx-auto px-4 text-center space-y-6">
-            <div class="space-y-2">
-                <h2 class="font-display font-bold text-xl text-gray-300">Bayt al-Hikmah Online</h2>
-                <p class="text-sm">A Digital House of Wisdom for the Ummah</p>
+    <footer class="bg-gray-900 text-gray-400 mt-20 py-16 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+                <!-- Brand Section -->
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                            </svg>
+                        </div>
+                        <h2 class="font-display font-bold text-xl text-gray-200">Bayt al-Hikmah Online</h2>
+                    </div>
+                    <p class="text-sm leading-relaxed max-w-xs">
+                        A Digital House of Wisdom dedicated to preserving and providing access to authentic Islamic knowledge for the global Ummah.
+                    </p>
+                </div>
+
+                <!-- Navigation Links -->
+                <div>
+                    <h3 class="font-display font-bold text-sm text-gray-200 uppercase tracking-widest mb-6">Explore</h3>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="{% url 'library:home' %}" class="hover:text-emerald-500 transition-colors">Home</a></li>
+                        <li><a href="{% url 'library:book_list' %}" class="hover:text-emerald-500 transition-colors">Browse Library</a></li>
+                        <li><a href="{% url 'library:scholar_list' %}" class="hover:text-emerald-500 transition-colors">Scholars Directory</a></li>
+                        <li><a href="{% url 'blog:article_list' %}" class="hover:text-emerald-500 transition-colors">Scholar Biographies</a></li>
+                    </ul>
+                </div>
+
+                <!-- Community & Support -->
+                <div>
+                    <h3 class="font-display font-bold text-sm text-gray-200 uppercase tracking-widest mb-6">Support</h3>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="{% url 'library:feedback' %}" class="hover:text-emerald-500 transition-colors">Help Improve</a></li>
+                        <li><a href="{% url 'library:report_issue' %}" class="hover:text-emerald-500 transition-colors">Report an Issue</a></li>
+                        <li><a href="{% url 'library:upload_guidelines' %}" class="hover:text-emerald-500 transition-colors">Upload Guidelines</a></li>
+                    </ul>
+                </div>
             </div>
             
-            <p class="text-sm italic text-gray-500">
-                Please remember me and my parents in your sincere prayers.
-            </p>
-            
-            <div class="pt-6 border-t border-gray-800 space-y-2">
-                <p class="text-xs">&copy; 2026 Bayt al-Hikmah Online</p>
-                <p class="text-xs leading-relaxed">
-                    Developed with love and dedication for the Ummah by<br>
-                    <span class="font-medium text-gray-300">Abdurrab Khan ibn-e-Sayeed Khan</span>
-                </p>
+            <div class="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="text-center md:text-left">
+                    <p class="text-xs">&copy; 2026 Bayt al-Hikmah Online. All rights reserved.</p>
+                    <p class="text-[10px] mt-1 italic text-gray-500">Please remember me and my parents in your sincere prayers.</p>
+                </div>
+                <div class="text-center md:text-right">
+                    <p class="text-xs leading-relaxed">
+                        Developed with love for the Ummah by<br>
+                        <span class="font-medium text-gray-300">Abdurrab Khan ibn-e-Sayeed Khan</span>
+                    </p>
+                </div>
             </div>
         </div>
     </footer>
