@@ -1,49 +1,333 @@
 {% extends "base.html" %}
 
-{% block title %}My Library — Bayt al-Hikmah Online{% endblock %}
-{% block meta_description %}Your saved books in the Bayt al-Hikmah Online.{% endblock %}
+{% block title %}Reading List — Bayt al-Hikmah Online{% endblock %}
+{% block meta_description %}Your personal reading list on Bayt al-Hikmah Online — books you've saved to read later.{% endblock %}
+
+{% block extra_head %}
+<style>
+    @keyframes fadeSlideIn {
+        from { opacity: 0; transform: translateY(16px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+    .card-anim {
+        animation: fadeSlideIn 0.45s ease-out both;
+    }
+    .remove-btn {
+        opacity: 0;
+        transform: scale(0.85);
+        transition: opacity 0.2s, transform 0.2s;
+    }
+    .reading-card:hover .remove-btn {
+        opacity: 1;
+        transform: scale(1);
+    }
+    .progress-bar {
+        background: linear-gradient(90deg, #059669, #0d9488);
+    }
+</style>
+{% endblock %}
 
 {% block content %}
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-14">
-    <!-- Header -->
-    <div class="flex items-center justify-between mb-10">
-        <div>
-            <h1 class="font-display font-bold text-3xl text-gray-900 mb-2 flex items-center gap-3">
-                <svg class="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path>
-                </svg>
-                My Library
-            </h1>
-            <p class="text-gray-500">Your bookmarked books — {{ bookmarks|length }} saved</p>
+
+<!-- ===== HERO HEADER ===== -->
+<div class="relative bg-gradient-to-br from-gray-900 via-emerald-950 to-gray-900 overflow-hidden">
+    <!-- Decorative blobs -->
+    <div class="absolute top-0 left-1/4 w-96 h-96 bg-emerald-500/10 blur-[120px] rounded-full pointer-events-none"></div>
+    <div class="absolute bottom-0 right-1/4 w-64 h-64 bg-teal-400/10 blur-[80px] rounded-full pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 lg:py-20 relative z-10">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+            <div>
+                <div class="flex items-center gap-3 mb-3">
+                    <div class="w-10 h-10 bg-emerald-500/20 border border-emerald-500/30 rounded-xl flex items-center justify-center">
+                        <svg class="w-5 h-5 text-emerald-400" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
+                        </svg>
+                    </div>
+                    <span class="text-emerald-400 text-xs font-bold uppercase tracking-widest">Personal</span>
+                </div>
+                <h1 class="font-display font-extrabold text-3xl lg:text-5xl text-white mb-3 leading-tight">
+                    Reading List
+                </h1>
+                <p class="text-gray-400 text-base lg:text-lg max-w-xl">
+                    Books you've saved to read later. Your personal collection of knowledge.
+                </p>
+            </div>
+
+            <!-- Stats bar -->
+            <div class="flex items-center gap-6 bg-white/5 border border-white/10 rounded-2xl px-6 py-4 backdrop-blur-md shrink-0">
+                <div class="text-center">
+                    <div class="text-2xl font-extrabold text-white">{{ bookmarks.paginator.count }}</div>
+                    <div class="text-xs text-gray-400 font-semibold uppercase tracking-wider mt-0.5">Saved</div>
+                </div>
+                <div class="w-px h-10 bg-white/10"></div>
+                <a href="{% url 'library:book_list' %}"
+                   class="flex items-center gap-2 px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-white font-bold rounded-xl transition-all text-sm shadow-lg shadow-emerald-900/40 active:scale-95">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                    </svg>
+                    Add Books
+                </a>
+            </div>
         </div>
-        <a href="{% url 'library:book_list' %}" class="hidden sm:flex items-center gap-2 px-5 py-2.5 bg-emerald-600 text-white font-medium rounded-xl hover:bg-emerald-700 transition-colors">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
-            Browse More Books
-        </a>
     </div>
+</div>
+
+<!-- ===== MAIN CONTENT ===== -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
 
     {% if bookmarks %}
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+    <!-- Sort / filter bar -->
+    <div class="flex items-center justify-between mb-8">
+        <p class="text-sm text-gray-500 font-medium">
+            Showing <span class="font-bold text-gray-900">{{ bookmarks|length }}</span> of
+            <span class="font-bold text-gray-900">{{ bookmarks.paginator.count }}</span> saved books
+        </p>
+        <div class="flex items-center gap-2">
+            <!-- Toggle between grid and list view -->
+            <button onclick="setView('grid')" id="btn-grid"
+                class="p-2 rounded-lg border border-gray-200 text-emerald-600 bg-emerald-50 transition-all" title="Grid view">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+                </svg>
+            </button>
+            <button onclick="setView('list')" id="btn-list"
+                class="p-2 rounded-lg border border-gray-200 text-gray-400 hover:text-emerald-600 hover:bg-emerald-50 transition-all" title="List view">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- ===== GRID VIEW ===== -->
+    <div id="view-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {% for bm in bookmarks %}
-        {% include "library/includes/book_card.html" with book=bm.book %}
+        <div class="reading-card group bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-emerald-300 shadow-sm hover:shadow-xl transition-all duration-300 card-anim"
+             style="animation-delay: {{ forloop.counter0 }}00ms"
+             id="reading-card-{{ bm.book.slug }}">
+
+            <!-- Cover -->
+            <a href="{{ bm.book.get_absolute_url }}" class="block">
+                <div class="relative aspect-[3/4] overflow-hidden bg-gray-100">
+                    {% if bm.book.cover_image %}
+                        <img src="{{ bm.book.cover_image.url }}"
+                             alt="{{ bm.book.title }}"
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                             loading="lazy">
+                    {% else %}
+                        <div class="w-full h-full flex flex-col items-center justify-center p-6 bg-[#064e3b] islamic-pattern relative">
+                            <div class="absolute inset-0 bg-gradient-to-br from-black/20 to-transparent"></div>
+                            <svg class="w-10 h-10 text-emerald-400 opacity-30 mb-4 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                            </svg>
+                            <p class="text-white font-display font-bold text-center text-sm leading-tight line-clamp-4 relative z-10">
+                                {{ bm.book.title }}
+                            </p>
+                        </div>
+                    {% endif %}
+
+                    <!-- Category badge -->
+                    <span class="absolute top-3 left-3 px-2.5 py-1 bg-white/95 backdrop-blur-md text-emerald-700 text-[10px] font-bold uppercase tracking-wider rounded-lg shadow-sm z-20">
+                        {{ bm.book.category.name }}
+                    </span>
+
+                    <!-- Saved date -->
+                    <span class="absolute bottom-3 right-3 px-2 py-1 bg-black/60 backdrop-blur-md text-white text-[9px] font-semibold rounded-lg z-20">
+                        Saved {{ bm.created_at|date:"M d" }}
+                    </span>
+                </div>
+            </a>
+
+            <!-- Details -->
+            <div class="p-4">
+                <a href="{{ bm.book.get_absolute_url }}" class="block">
+                    <h3 class="font-display font-bold text-gray-900 group-hover:text-emerald-700 transition-colors line-clamp-2 mb-1 leading-snug text-sm">
+                        {{ bm.book.title }}
+                    </h3>
+                    <p class="text-xs text-gray-400 font-medium mb-3">{{ bm.book.scholar.name }}</p>
+                </a>
+
+                <!-- Action row -->
+                <div class="flex items-center gap-2 pt-3 border-t border-gray-50">
+                    <a href="{% url 'library:book_read' bm.book.slug %}"
+                       class="flex-1 flex items-center justify-center gap-1.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition-all">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                        </svg>
+                        Read
+                    </a>
+                    <button onclick="removeBookmark('{{ bm.book.slug }}', '{{ csrf_token }}')"
+                            class="remove-btn flex items-center justify-center w-9 h-9 bg-red-50 hover:bg-red-100 text-red-500 rounded-xl transition-all border border-red-100"
+                            title="Remove from reading list">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
         {% endfor %}
     </div>
 
+    <!-- ===== LIST VIEW (hidden by default) ===== -->
+    <div id="view-list" class="hidden space-y-4">
+        {% for bm in bookmarks %}
+        <div class="reading-card group bg-white rounded-2xl border border-gray-100 hover:border-emerald-300 shadow-sm hover:shadow-lg transition-all duration-300 p-4 card-anim"
+             style="animation-delay: {{ forloop.counter0 }}00ms"
+             id="reading-card-list-{{ bm.book.slug }}">
+            <div class="flex gap-4 items-center">
+                <!-- Thumbnail -->
+                <a href="{{ bm.book.get_absolute_url }}" class="shrink-0">
+                    <div class="w-16 h-20 rounded-xl overflow-hidden bg-gray-100 shadow-md">
+                        {% if bm.book.cover_image %}
+                            <img src="{{ bm.book.cover_image.url }}" alt="{{ bm.book.title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        {% else %}
+                            <div class="w-full h-full bg-[#064e3b] islamic-pattern flex items-center justify-center p-2">
+                                <p class="text-white text-[8px] font-bold text-center leading-tight">{{ bm.book.title|truncatechars:25 }}</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </a>
+
+                <!-- Info -->
+                <div class="flex-1 min-w-0">
+                    <a href="{{ bm.book.get_absolute_url }}">
+                        <h3 class="font-display font-bold text-gray-900 group-hover:text-emerald-700 transition-colors line-clamp-1 mb-0.5">
+                            {{ bm.book.title }}
+                        </h3>
+                    </a>
+                    <p class="text-sm text-gray-500 mb-1">{{ bm.book.scholar.name }}</p>
+                    <div class="flex items-center gap-3 flex-wrap">
+                        <span class="px-2 py-0.5 bg-emerald-50 text-emerald-700 text-[10px] font-bold uppercase tracking-wider rounded-md">
+                            {{ bm.book.category.name }}
+                        </span>
+                        <span class="text-[10px] text-gray-400 font-medium">{{ bm.book.language.name }}</span>
+                        <span class="text-[10px] text-gray-400">Saved {{ bm.created_at|date:"M d, Y" }}</span>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex items-center gap-2 shrink-0">
+                    <a href="{% url 'library:book_read' bm.book.slug %}"
+                       class="hidden sm:flex items-center gap-1.5 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition-all">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                        </svg>
+                        Read
+                    </a>
+                    <a href="{% url 'library:book_download' bm.book.slug %}"
+                       class="hidden sm:flex items-center gap-1.5 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-600 text-xs font-bold rounded-xl transition-all">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                        </svg>
+                        Download
+                    </a>
+                    <button onclick="removeBookmark('{{ bm.book.slug }}', '{{ csrf_token }}')"
+                            class="flex items-center justify-center w-9 h-9 bg-red-50 hover:bg-red-100 text-red-400 hover:text-red-600 rounded-xl transition-all border border-red-100"
+                            title="Remove from reading list">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Pagination -->
     {% include "library/includes/pagination.html" %}
+
     {% else %}
-    <div class="text-center py-20">
-        <div class="w-24 h-24 mx-auto mb-6 bg-emerald-50 rounded-2xl flex items-center justify-center">
-            <svg class="w-12 h-12 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path>
+    <!-- ===== EMPTY STATE ===== -->
+    <div class="flex flex-col items-center justify-center py-28 text-center">
+        <div class="w-28 h-28 bg-gradient-to-br from-emerald-50 to-teal-50 rounded-3xl flex items-center justify-center mb-8 shadow-inner border border-emerald-100">
+            <svg class="w-14 h-14 text-emerald-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
             </svg>
         </div>
-        <h3 class="font-display font-semibold text-xl text-gray-700 mb-2">Your library is empty</h3>
-        <p class="text-gray-400 mb-6 max-w-md mx-auto">Start saving books you want to read later. Click the "Save" button on any book detail page.</p>
-        <a href="{% url 'library:book_list' %}" class="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 text-white font-medium rounded-xl hover:bg-emerald-700 transition-colors">
-            Browse Books
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+        <h2 class="font-display font-extrabold text-2xl text-gray-800 mb-3">Your reading list is empty</h2>
+        <p class="text-gray-400 text-base max-w-md mb-8 leading-relaxed">
+            Browse the library and click the <strong class="text-emerald-600">Save</strong> button on any book to add it here for later.
+        </p>
+        <a href="{% url 'library:book_list' %}"
+           class="inline-flex items-center gap-2.5 px-8 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-2xl shadow-lg shadow-emerald-200 hover:shadow-xl transition-all active:scale-95">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+            </svg>
+            Browse the Library
         </a>
     </div>
     {% endif %}
+
 </div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    // ─── View toggle ───────────────────────────────────────────────
+    function setView(mode) {
+        const grid = document.getElementById('view-grid');
+        const list = document.getElementById('view-list');
+        const btnGrid = document.getElementById('btn-grid');
+        const btnList = document.getElementById('btn-list');
+
+        if (mode === 'grid') {
+            grid.classList.remove('hidden');
+            list.classList.add('hidden');
+            btnGrid.classList.add('text-emerald-600', 'bg-emerald-50', 'border-emerald-200');
+            btnGrid.classList.remove('text-gray-400');
+            btnList.classList.remove('text-emerald-600', 'bg-emerald-50', 'border-emerald-200');
+            btnList.classList.add('text-gray-400');
+        } else {
+            list.classList.remove('hidden');
+            grid.classList.add('hidden');
+            btnList.classList.add('text-emerald-600', 'bg-emerald-50', 'border-emerald-200');
+            btnList.classList.remove('text-gray-400');
+            btnGrid.classList.remove('text-emerald-600', 'bg-emerald-50', 'border-emerald-200');
+            btnGrid.classList.add('text-gray-400');
+        }
+        localStorage.setItem('readingListView', mode);
+    }
+
+    // Restore saved view preference
+    const saved = localStorage.getItem('readingListView');
+    if (saved === 'list') setView('list');
+
+    // ─── Remove bookmark ───────────────────────────────────────────
+    function removeBookmark(slug, csrfToken) {
+        fetch(`/book/${slug}/bookmark/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': csrfToken,
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (!data.bookmarked) {
+                // Animate out both grid and list cards
+                ['reading-card-' + slug, 'reading-card-list-' + slug].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        el.style.transition = 'all 0.35s ease';
+                        el.style.opacity = '0';
+                        el.style.transform = 'scale(0.9)';
+                        setTimeout(() => el.remove(), 350);
+                    }
+                });
+
+                // Update count
+                const countEls = document.querySelectorAll('.saved-count');
+                countEls.forEach(el => {
+                    const n = parseInt(el.textContent) - 1;
+                    el.textContent = n;
+                });
+            }
+        })
+        .catch(() => alert('Could not remove. Please try again.'));
+    }
+</script>
 {% endblock %}

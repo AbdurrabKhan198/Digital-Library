@@ -1,5 +1,5 @@
 <!-- Book Card Component - Reusable across all pages -->
-<div class="group bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-emerald-500 shadow-sm hover:shadow-xl transition-all duration-300" id="book-card-{{ book.slug }}">
+<div class="group bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-emerald-300 shadow-sm hover:shadow-xl transition-all duration-300" id="book-card-{{ book.slug }}">
     <a href="{{ book.get_absolute_url }}">
         <!-- Cover Image Container -->
         <div class="relative aspect-[3/4] overflow-hidden bg-gray-100">
@@ -32,6 +32,20 @@
                     {{ book.category.name }}
                 </span>
             </div>
+
+            <!-- Bookmark button (top-right, shows on hover for logged-in users) -->
+            {% if user.is_authenticated %}
+            <button onclick="event.preventDefault(); cardToggleBookmark('{{ book.slug }}', '{{ csrf_token }}', this)"
+                    data-slug="{{ book.slug }}"
+                    class="bookmark-card-btn absolute top-3 right-3 z-20 w-8 h-8 rounded-xl flex items-center justify-center shadow-md transition-all
+                           opacity-0 group-hover:opacity-100 scale-90 group-hover:scale-100
+                           bg-white/90 backdrop-blur-md text-gray-400 hover:text-emerald-600 hover:bg-white border border-white/50"
+                    title="Save to Reading List">
+                <svg class="w-4 h-4 bookmark-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
+                </svg>
+            </button>
+            {% endif %}
 
             <!-- Stats overlay (Appears on hover) -->
             <div class="absolute inset-0 bg-emerald-950/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-6 z-10 backdrop-blur-[2px]">
@@ -67,3 +81,39 @@
         </div>
     </div>
 </div>
+
+{% if user.is_authenticated %}
+<script>
+(function() {
+    // Avoid re-declaring if included multiple times
+    if (window._cardBookmarkReady) return;
+    window._cardBookmarkReady = true;
+
+    window.cardToggleBookmark = function(slug, csrfToken, btnEl) {
+        fetch('/book/' + slug + '/bookmark/', {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': csrfToken,
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(r => r.json())
+        .then(data => {
+            const icon = btnEl.querySelector('.bookmark-icon');
+            if (data.bookmarked) {
+                icon.setAttribute('fill', 'currentColor');
+                btnEl.classList.remove('text-gray-400');
+                btnEl.classList.add('text-emerald-600', 'bg-emerald-50');
+                btnEl.title = 'Saved to Reading List';
+            } else {
+                icon.setAttribute('fill', 'none');
+                btnEl.classList.add('text-gray-400');
+                btnEl.classList.remove('text-emerald-600', 'bg-emerald-50');
+                btnEl.title = 'Save to Reading List';
+            }
+        })
+        .catch(() => {});
+    };
+})();
+</script>
+{% endif %}
