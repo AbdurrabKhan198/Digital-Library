@@ -1,17 +1,23 @@
 """
-Management command to create a default superuser for development.
+Management command to create a default superuser.
+Credentials are read from environment variables (.env) via python-decouple.
 """
 
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User
+from decouple import config
 
 
 class Command(BaseCommand):
-    help = "Create a default superuser (admin/admin123)"
+    help = "Create a default superuser from .env credentials"
 
     def handle(self, *args, **options):
-        if not User.objects.filter(username="admin").exists():
-            User.objects.create_superuser("admin", "admin@example.com", "admin123")
-            self.stdout.write(self.style.SUCCESS("✅ Superuser 'admin' created (password: admin123)"))
+        username = config("DJANGO_ADMIN_USERNAME", default="admin")
+        email = config("DJANGO_ADMIN_EMAIL", default="admin@example.com")
+        password = config("DJANGO_ADMIN_PASSWORD", default="changeme")
+
+        if not User.objects.filter(username=username).exists():
+            User.objects.create_superuser(username, email, password)
+            self.stdout.write(self.style.SUCCESS(f"✅ Superuser '{username}' created successfully."))
         else:
-            self.stdout.write("⏭️  Superuser 'admin' already exists")
+            self.stdout.write(f"⏭️  Superuser '{username}' already exists.")
